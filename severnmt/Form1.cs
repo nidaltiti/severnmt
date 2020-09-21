@@ -25,8 +25,10 @@ namespace severnmt
         Listen _listen2;
         private string outputFolder;
         Socket sck;
+        cilent _cilent;
+        bool openconntion;
         string data;
-        
+        List<cilent> cilents = new List<cilent>();
         Tranferclint transferClient;
         bool ClintConnction= false;
         public Form1()
@@ -59,7 +61,7 @@ namespace severnmt
             Invoke((MethodInvoker)delegate
             {
 
-                if (connectbutton.Text == "Conncetion")
+                if (openconntion !=true)
                 {
                     _listen = new Listen(8);
                     _listen.Start();
@@ -70,15 +72,26 @@ namespace severnmt
                     connectbutton.Text = "Diconncetion";
 
                     ClintConnction = true;
-
+                    openconntion = true;
                 }
                 else {
+                    
+                    try
+                    {
+
+                        _listen.Stop();
+                        _listen2.Stop();
+
+                        if (_cilent != null)
+                        {
+
+                            _cilent.close();
+                        }
+
+                    }
+                    catch { }
                     connectbutton.Text = "Conncetion";
-
-
-                    _listen.Stop();
-                    _listen2.Stop();
-
+                    openconntion = false;
                 }
             });
 
@@ -114,12 +127,16 @@ namespace severnmt
        // List<cilent> cilentlist = new List<cilent>();
         private void _listen_Accepted(Socket Sk)
         {
-
+            MessageBox.Show("connct");
             cilent cilent = new cilent(Sk); 
                 cilent.Receive += Cilent_Receive;
                 cilent.Disconnted += Cilent_Disconnted;
-           
-                //Start();
+
+            _cilent = cilent;
+
+
+            // cilents.Add(cilent);
+            //Start();
 
 
 
@@ -134,15 +151,43 @@ namespace severnmt
 
         private void Cilent_Disconnted(cilent sender)
         {
-            Invoke((MethodInvoker)delegate
-            { 
-
-
-                   
-                       
-                        MessageBox.Show("close");
-                    
+            try
+            {
                 
+                //_listen2.Stop();
+              //  _listen = null;
+            }
+            catch { MessageBox.Show("filed"); }
+
+            new Thread(() =>
+            {
+             //   _listen.Stop();
+                _cilent.close();
+                sender.close();
+
+                if (openconntion)
+                {
+                    //_listen = new Listen(8);
+                    //_listen.Start();
+                    ////_listen2 = new Listen(9);
+                    ////_listen2.Start();
+                    //_listen.socketAccpete += _listen_Accepted;
+                    Thread.Sleep(500);
+                }
+            }).Start();
+               
+            
+            //_listen2 = new Listen(9);
+
+
+            Invoke((MethodInvoker)delegate
+            {
+              //  new Thread(() => { Thread.Sleep(1000); }).Start();
+
+
+                     // MessageBox.Show("close");
+
+
             });
         }
 
@@ -202,23 +247,30 @@ namespace severnmt
                 }
                 catch
                 {
-                    int fox = Data.Length;
+                    //int fox = Data.Length;
 
-                    //This means we're trying to disconnect.
-                    if (fox > 0)
+                    ////This means we're trying to disconnect.
+                    //if (fox == 0)
+                    //{
 
-                    MessageBox.Show(stringdata);
-                    else
-                    { if (ClintConnction )
-                        {
-                            // int fox = Data.Length;
+                    //   // MessageBox.Show(stringdata);
 
-                            
-                             ClintConnction = false;
-                        }
-                       
+                    //  // _listen.Stop();
+                    //  // _listen2.Stop();
+                        
+                    //}
+                    //else
+                    //{
+                    //    if (ClintConnction)
+                    //    {
+                    //        // int fox = Data.Length;
 
-                    }
+
+                    //        ClintConnction = false;
+                    //    }
+
+
+                  //  }
 
                 }
 

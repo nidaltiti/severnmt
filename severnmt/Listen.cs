@@ -39,11 +39,17 @@ namespace severnmt
         public void Start() {
             if (listenring) return;
             IPEndPoint localtion = new IPEndPoint(IPAddress.Any, Port);
-            _socket.Bind(localtion);
-            _socket.Listen(0);
-            _socket.BeginAccept(Callback, null);
 
-             listenring = true;
+
+            try
+            {
+                _socket.Bind(localtion);
+                _socket.Listen(0);
+                _socket.BeginAccept(Callback, null);
+
+                listenring = true;
+            }
+            catch { }
 
         }
         public void Stop() { if (!listenring) 

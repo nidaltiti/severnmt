@@ -33,10 +33,16 @@ namespace severnmt
         {
             try
             {
-
                 sck.EndReceive(ar);
-                byte[] buf = new byte[8192];
-                int rec = sck.Receive(buf, buf.Length, 0);
+
+
+
+            byte[] buf = new byte[8192];
+            int rec = sck.Receive(buf, buf.Length, 0);
+
+
+          
+
                 if (rec < buf.Length)
                 {
 
@@ -48,16 +54,27 @@ namespace severnmt
                         Receive(this, buf);
 
                     }
+                    if (rec == 0)
+                    {
+                        if (Disconnted != null)
+                        {
+
+                            Disconnted(this);
+
+                        }
+                        sck.BeginReceive(new byte[] { 0 }, 0, 0, 0, callback, null);
+
+                    }
 
                 }
-              
-                
-                sck.BeginReceive(new byte[] { 0 }, 0, 0, 0, callback, null);
+
+
+
 
             }
-            catch 
+            catch
             {
-              
+
 
                 close();
                 if (Disconnted != null)
@@ -72,8 +89,8 @@ namespace severnmt
         }
 
             public void close() {
-           
-                
+
+            sck.Close();
                 }
         public delegate void cilentReceiveHanldy(cilent sender, byte[] data);
         public event cilentReceiveHanldy Receive;
