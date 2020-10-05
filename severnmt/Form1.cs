@@ -127,7 +127,7 @@ namespace severnmt
        // List<cilent> cilentlist = new List<cilent>();
         private void _listen_Accepted(Socket Sk)
         {
-            MessageBox.Show("connct");
+          //  MessageBox.Show("connct");
             cilent cilent = new cilent(Sk); 
                 cilent.Receive += Cilent_Receive;
                 cilent.Disconnted += Cilent_Disconnted;
@@ -205,48 +205,48 @@ namespace severnmt
 
         private void Cilent_Receive( cilent sender,byte[] Data)
         {
+            string stringdata = Encoding.Default.GetString(Data);
 
+            MessageBox.Show(stringdata);
 
 
             this.Invoke((MethodInvoker)delegate
             {
-                string stringdata = Encoding.Default.GetString(Data);
-
                
 
-                try
-                {
-                    //  string stringdata = n.ToString();
-                    string Arrayjson = "[" + stringdata + "]";
-                    string Sendjson = JsonConvert.SerializeObject(Arrayjson);
+           //     try
+                //{
+                //    //  string stringdata = n.ToString();
+                //    string Arrayjson = "[" + stringdata + "]";
+                //    string Sendjson = JsonConvert.SerializeObject(Arrayjson);
 
-                    JArray formatted = JArray.Parse(stringdata);
-                    int number = formatted[0]["filebyet"].Value<int>();
-                    byte[] bytes = BitConverter.GetBytes(number);
-                    if (BitConverter.IsLittleEndian) { }
-
-
+                //    JArray formatted = JArray.Parse(stringdata);
+                //    int number = formatted[0]["filebyet"].Value<int>();
+                //    byte[] bytes = BitConverter.GetBytes(number);
+                //    if (BitConverter.IsLittleEndian) { }
 
 
-                    //MemoryStream theMemStream = new MemoryStream();
-
-                    //theMemStream.Write(bytes, 0, bytes.Length);
 
 
-                    //FileStream fileStream = File.Open(@"C:\Users\nidal\Desktop\temp.txt", FileMode.Create);
+                //    //MemoryStream theMemStream = new MemoryStream();
 
-                    //theMemStream.WriteTo(fileStream);
+                //    //theMemStream.Write(bytes, 0, bytes.Length);
 
-                    //fileStream.Close();
 
-                    ListViewItem item = new ListViewItem(formatted[0]["NameFile"].Value<string>());
-                    // item.SubItems.Add(formatted[0]["NameFile"].Value<string>());
-                    //  MessageBox.Show(formatted[0]["Type"].Value<string>());
-                    item.SubItems.Add(formatted[0]["Type"].Value<string>());
-                    listfiles.Items.Add(item);
-                }
-                catch
-                {
+                //    //FileStream fileStream = File.Open(@"C:\Users\nidal\Desktop\temp.txt", FileMode.Create);
+
+                //    //theMemStream.WriteTo(fileStream);
+
+                //    //fileStream.Close();
+
+                //    ListViewItem item = new ListViewItem(formatted[0]["NameFile"].Value<string>());
+                //    // item.SubItems.Add(formatted[0]["NameFile"].Value<string>());
+                //    //  MessageBox.Show(formatted[0]["Type"].Value<string>());
+                //    item.SubItems.Add(formatted[0]["Type"].Value<string>());
+                //    listfiles.Items.Add(item);
+                //}
+               // catch
+              //  {
                     //int fox = Data.Length;
 
                     ////This means we're trying to disconnect.
@@ -272,7 +272,7 @@ namespace severnmt
 
                   //  }
 
-                }
+             //   }
 
             });
 
