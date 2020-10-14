@@ -22,7 +22,7 @@ namespace severnmt
     public partial class Form1 : Form
     {
         Listen _listen;
-        Listen _listen2;
+        Listen tranlistening;
         private string outputFolder;
         Socket sck;
         cilent _cilent;
@@ -31,14 +31,17 @@ namespace severnmt
         List<cilent> cilents = new List<cilent>();
         Tranferclint transferClient;
         bool ClintConnction= false;
+        int AddIhem = 0;
+
+        List<CheckBox> Boxes = new List<CheckBox>();
         public Form1()
         {
             InitializeComponent();
            // _listen = new Listen(8);
            //_listen.socketAccpete += _listen_Accepted;
-           // _listen2 = new Listen(9);
+           // tranlistening = new Listen(9);
            
-           // _listen.socketAccpete += _listen2_Accepted;
+           // _listen.socketAccpete += tranlistening_Accepted;
 
 
         }
@@ -66,12 +69,12 @@ namespace severnmt
                     _listen = new Listen(8);
                     _listen.Start();
                     _listen.socketAccpete += _listen_Accepted;
-                    _listen2 = new Listen(9);
-                    _listen2.Start();
-                    _listen.socketAccpete += _listen2_Accepted;
+                    tranlistening = new Listen(9);
+                    tranlistening.Start();
+                    tranlistening.socketAccpete += tranlistening_Accepted;
                     connectbutton.Text = "Diconncetion";
-
-                    ClintConnction = true;
+                    
+                  //  ClintConnction = true;
                     openconntion = true;
                 }
                 else {
@@ -80,8 +83,9 @@ namespace severnmt
                     {
 
                         _listen.Stop();
-                        _listen2.Stop();
-
+                        tranlistening.Stop();
+                        transferClient.Close();
+                        transferClient = null;
                         if (_cilent != null)
                         {
 
@@ -91,13 +95,14 @@ namespace severnmt
                     }
                     catch { }
                     connectbutton.Text = "Conncetion";
+                   
                     openconntion = false;
                 }
             });
 
         }
 
-        private void _listen2_Accepted(Socket Sk)
+        private void tranlistening_Accepted(Socket Sk)
         {
             try
             {
@@ -131,6 +136,7 @@ namespace severnmt
             cilent cilent = new cilent(Sk); 
                 cilent.Receive += Cilent_Receive;
                 cilent.Disconnted += Cilent_Disconnted;
+            ClintConnction = true;
 
             _cilent = cilent;
 
@@ -154,7 +160,7 @@ namespace severnmt
             try
             {
                 
-                //_listen2.Stop();
+                //tranlistening.Stop();
               //  _listen = null;
             }
             catch { MessageBox.Show("filed"); }
@@ -164,20 +170,21 @@ namespace severnmt
              //   _listen.Stop();
                 _cilent.close();
                 sender.close();
-
+                ClintConnction = false;
+              //  clear_Listview();
                 if (openconntion)
                 {
                     //_listen = new Listen(8);
                     //_listen.Start();
-                    ////_listen2 = new Listen(9);
-                    ////_listen2.Start();
+                    ////tranlistening = new Listen(9);
+                    ////tranlistening.Start();
                     //_listen.socketAccpete += _listen_Accepted;
                     Thread.Sleep(500);
                 }
             }).Start();
                
             
-            //_listen2 = new Listen(9);
+            //tranlistening = new Listen(9);
 
 
             Invoke((MethodInvoker)delegate
@@ -207,57 +214,54 @@ namespace severnmt
         {
             string stringdata = Encoding.Default.GetString(Data);
 
-            MessageBox.Show(stringdata);
+          //  MessageBox.Show(stringdata);
 
 
             this.Invoke((MethodInvoker)delegate
             {
+
+
+            try
+            {
                
+                string Arrayjson = "[" + stringdata + "]";
+         
 
-           //     try
-                //{
-                //    //  string stringdata = n.ToString();
-                //    string Arrayjson = "[" + stringdata + "]";
-                //    string Sendjson = JsonConvert.SerializeObject(Arrayjson);
+                JArray formatted = JArray.Parse(Arrayjson);
+                  
 
-                //    JArray formatted = JArray.Parse(stringdata);
-                //    int number = formatted[0]["filebyet"].Value<int>();
-                //    byte[] bytes = BitConverter.GetBytes(number);
-                //    if (BitConverter.IsLittleEndian) { }
-
-
+                    ListViewItem item = new ListViewItem(formatted[0]["NameFile"].Value<string>());
+                 
+                    item.SubItems.Add(formatted[0]["Type"].Value<string>());
+                    listfiles.Items.Add(item);
+                    CheckBox _checkBox = new CheckBox();
 
 
-                //    //MemoryStream theMemStream = new MemoryStream();
+                    System.Drawing.Point _point = new System.Drawing.Point(item.SubItems[1].Bounds.X +40, item.SubItems[1].Bounds.Y );
 
-                //    //theMemStream.Write(bytes, 0, bytes.Length);
+                    _checkBox.Location= _point;
+                    Boxes.Add(_checkBox);
+                    listfiles.Controls.Add(Boxes[AddIhem]);
+
+                    AddIhem++;
 
 
-                //    //FileStream fileStream = File.Open(@"C:\Users\nidal\Desktop\temp.txt", FileMode.Create);
 
-                //    //theMemStream.WriteTo(fileStream);
 
-                //    //fileStream.Close();
+                }
+                catch
+            {
+               // int fox = Data.Length;
 
-                //    ListViewItem item = new ListViewItem(formatted[0]["NameFile"].Value<string>());
-                //    // item.SubItems.Add(formatted[0]["NameFile"].Value<string>());
-                //    //  MessageBox.Show(formatted[0]["Type"].Value<string>());
-                //    item.SubItems.Add(formatted[0]["Type"].Value<string>());
-                //    listfiles.Items.Add(item);
-                //}
-               // catch
+                //This means we're trying to disconnect.
+              //  if (fox == 0)
               //  {
-                    //int fox = Data.Length;
-
-                    ////This means we're trying to disconnect.
-                    //if (fox == 0)
-                    //{
 
                     //   // MessageBox.Show(stringdata);
 
                     //  // _listen.Stop();
-                    //  // _listen2.Stop();
-                        
+                    //  // tranlistening.Stop();
+
                     //}
                     //else
                     //{
@@ -270,14 +274,29 @@ namespace severnmt
                     //    }
 
 
-                  //  }
+                    //  }
 
-             //   }
+                      }
 
-            });
+                });
 
 
         }
+        private void clear_Listview()
+        {
+            try
+            {
+                listfiles.Items.Clear();
+               //  for (int n = 0; n <=listfiles.Items.Count; n++) { listfiles.Items.RemoveAt(n); }
+               // listfiles.Items.RemoveAt(0);
+               foreach (CheckBox b in Boxes) { listfiles.Controls.Remove(b); }
+               AddIhem = 0;
+                Boxes.Clear();
+            }
+            catch { }
+
+        }
+        private void checkboxes() { }
         //  private Tranferclint transferClient=new  Tranferclint;
         private void TransferClient_Queued(object sender, queue queue)
         {
@@ -305,6 +324,18 @@ namespace severnmt
                     }
                 }
             }
+        }
+
+
+        private void timer_Tick(object sender, EventArgs e)
+        {
+         if(!ClintConnction ) { clear_Listview(); }
+
+        }
+
+        private void Reload_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

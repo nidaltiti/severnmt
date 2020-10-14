@@ -19,6 +19,7 @@ namespace severnmt
     {
         public QueueType Type;
         public string Filename;
+        public string Shortename;
         //This will hold our transfer client
         public Tranferclint Client;
         //This will hold our upload thread.
@@ -57,6 +58,7 @@ namespace severnmt
                 var queue = new queue();
                 //Set our filename
                 queue.Filename = fileName;
+                queue.Shortename = Path.GetFileName(fileName);
                 //Set our client
                 queue.Client = client;
                 //Set our queue type to upload.
@@ -65,7 +67,7 @@ namespace severnmt
                 queue.FS = new FileStream(fileName, FileMode.Open);
                 //Create our transfer thread
                 queue.Thread = new Thread(new ParameterizedThreadStart(transferProc));
-                //   queue.Thread.IsBackground = true;
+                //  queue.Thread.IsBackground = true;
                 //Generate our ID
                 queue.ID = Program.Rand.Next();
                 //Set our length to the size of the file.
@@ -79,20 +81,23 @@ namespace severnmt
             }
         }
 
-        public static queue CreateDownloadQueue(Tranferclint client, int id, string saveName, long length)
+        public static queue CreateDownloadQueue(Tranferclint client, int id, string SName, string saveName,  long length)
         {
             try
             {
                 //Same as above with some changes.
                 var queue = new queue();
                 queue.Filename = Path.GetFileName(saveName);
+                queue.Shortename = SName;
                 queue.Client = client;
                   queue.Type = QueueType.Download;
                 //Create our file stream for writing.
                 queue.FS = new FileStream(saveName, FileMode.Create);
                 //Fill the stream will 0 bytes based on the real size. So we can index write.
-                queue.FS.SetLength(length);
                 queue.Length = length;
+
+                queue.FS.SetLength(length);
+               // queue.Length = length;
                 //Instead of generating an ID, we will set the ID that has been sent.
                 queue.ID = id;
                 return queue;

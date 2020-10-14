@@ -85,7 +85,10 @@ namespace severnmt
                 PacketWriter pw = new PacketWriter();
                 pw.Write((byte)Headers.Queue);
                 pw.Write(queue.ID);
+             
                 pw.Write(queue.Filename);
+                pw.Write(queue.Shortename);
+
                 pw.Write(queue.Length);
                 Send(pw.GetBytes());
 
@@ -157,7 +160,7 @@ namespace severnmt
                         long length = pr.ReadInt64();
 
                         //Create our queueload queue.
-                        queue queue = queue.CreateDownloadQueue(this, id, Path.Combine(OutputFolder,
+                        queue queue = queue.CreateDownloadQueue(this, id, Path.GetFileName(fileName), Path.Combine(OutputFolder,
                             Path.GetFileName(fileName)), length);
 
                         //Add it to our transfer list.

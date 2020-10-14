@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.Timer timer;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.listfiles = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -46,8 +48,15 @@
             this.connectbutton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+            this.Reload = new System.Windows.Forms.Button();
+            timer = new System.Windows.Forms.Timer(this.components);
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // timer
+            // 
+            timer.Enabled = true;
+            timer.Tick += new System.EventHandler(this.timer_Tick);
             // 
             // listfiles
             // 
@@ -91,7 +100,7 @@
             // 
             // boxmix
             // 
-            this.boxmix.Location = new System.Drawing.Point(594, 128);
+            this.boxmix.Location = new System.Drawing.Point(170, 403);
             this.boxmix.Name = "boxmix";
             this.boxmix.Size = new System.Drawing.Size(255, 20);
             this.boxmix.TabIndex = 3;
@@ -177,11 +186,22 @@
             this.toolStripLabel1.Size = new System.Drawing.Size(86, 35);
             this.toolStripLabel1.Text = "toolStripLabel1";
             // 
+            // Reload
+            // 
+            this.Reload.Location = new System.Drawing.Point(685, 85);
+            this.Reload.Name = "Reload";
+            this.Reload.Size = new System.Drawing.Size(93, 23);
+            this.Reload.TabIndex = 5;
+            this.Reload.Text = "Reload";
+            this.Reload.UseVisualStyleBackColor = true;
+            this.Reload.Click += new System.EventHandler(this.Reload_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.Reload);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.boxmix);
             this.Controls.Add(this.Send);
@@ -214,6 +234,7 @@
         private System.Windows.Forms.ToolStripButton connectbutton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
+        private System.Windows.Forms.Button Reload;
     }
 }
 
