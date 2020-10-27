@@ -86,8 +86,8 @@ namespace severnmt
                 pw.Write((byte)Headers.Queue);
                 pw.Write(queue.ID);
              
+                pw.Write(queue.Typefile);
                 pw.Write(queue.Filename);
-                pw.Write(queue.Shortename);
 
                 pw.Write(queue.Length);
                 Send(pw.GetBytes());

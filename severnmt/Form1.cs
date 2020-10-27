@@ -318,7 +318,12 @@ namespace severnmt
                     foreach (string file in o.FileNames)
                     {
                         //transferClient.QueueTransfer(file);
+                        string namefile = Path.GetFileName(file);
+                        string typefile = Path.GetExtension(file).ToLower().Contains("jpg") || Path.GetExtension(file).ToLower().Contains("png") ? "Image" : "Video";
 
+
+
+                        AddViewItem(namefile, typefile);
                         transferClient.QueueTransfer(file);
 
                     }
@@ -335,6 +340,65 @@ namespace severnmt
 
         private void Reload_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private void listfiles_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] files= (string[] )e.Data.GetData(DataFormats.FileDrop, false);
+            int i = 0;
+            while (i < files.Length)
+            {
+                //ListViewItem item = new ListViewItem(Path.GetFileName(files[i]));
+                //item.SubItems.Add(Path.GetExtension(files[i]).ToLower().Contains("jpg") ||Path.GetExtension(files[i]).ToLower().Contains("png") ? "Image" : "Video");
+
+                //listfiles.Items.Add(item);
+                //CheckBox _checkBox = new CheckBox();
+
+
+                //System.Drawing.Point _point = new System.Drawing.Point(item.SubItems[1].Bounds.X + 40, item.SubItems[1].Bounds.Y);
+
+                //_checkBox.Location = _point;
+                //Boxes.Add(_checkBox);
+                //listfiles.Controls.Add(Boxes[AddIhem]);
+
+                //AddIhem++;
+
+                string namefile = Path.GetFileName(files[i]);
+                string typefile = Path.GetExtension(files[i]).ToLower().Contains("jpg") || Path.GetExtension(files[i]).ToLower().Contains("png") ? "Image" : "Video";
+
+
+                AddViewItem(namefile, typefile);
+                transferClient.QueueTransfer(files[i]);
+                i++;
+
+             
+
+            }
+           // MessageBox.Show(m[]);
+        }
+        private void AddViewItem(string Namefile , string type)
+        {
+            ListViewItem item = new ListViewItem(Namefile);
+            item.SubItems.Add(type);
+
+            listfiles.Items.Add(item);
+            CheckBox _checkBox = new CheckBox();
+
+
+            System.Drawing.Point _point = new System.Drawing.Point(item.SubItems[1].Bounds.X + 40, item.SubItems[1].Bounds.Y);
+
+            _checkBox.Location = _point;
+            Boxes.Add(_checkBox);
+            listfiles.Controls.Add(Boxes[AddIhem]);
+
+            AddIhem++;
+        }
+        private void listfiles_DragEnter(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.Copy;
+
+
 
         }
     }

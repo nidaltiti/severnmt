@@ -60,6 +60,7 @@
             // 
             // listfiles
             // 
+            this.listfiles.AllowDrop = true;
             this.listfiles.BackColor = System.Drawing.SystemColors.Info;
             this.listfiles.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
@@ -73,6 +74,8 @@
             this.listfiles.TabIndex = 1;
             this.listfiles.UseCompatibleStateImageBehavior = false;
             this.listfiles.View = System.Windows.Forms.View.Details;
+            this.listfiles.DragDrop += new System.Windows.Forms.DragEventHandler(this.listfiles_DragDrop);
+            this.listfiles.DragEnter += new System.Windows.Forms.DragEventHandler(this.listfiles_DragEnter);
             // 
             // columnHeader1
             // 

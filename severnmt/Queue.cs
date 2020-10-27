@@ -20,7 +20,7 @@ namespace severnmt
         public QueueType Type;
         public string Filename;
         public string Shortename;
-        public string _Type;
+        public string Typefile;
         //This will hold our transfer client
         public Tranferclint Client;
         //This will hold our upload thread.
@@ -59,8 +59,8 @@ namespace severnmt
                 var queue = new queue();
                 //Set our filename
                 
-                queue.Shortename = Path.GetFileName(fileName);
-                queue.Filename = "imge";
+                queue.Filename = Path.GetFileName(fileName);
+                queue.Typefile = Path.GetFileName(fileName).ToLower().Contains("jpg") || Path.GetFileName(fileName).ToLower().Contains("png") ? "Image":"Video";
                 // queue._Type = "image";
                 //Set our client
                 queue.Client = client;
