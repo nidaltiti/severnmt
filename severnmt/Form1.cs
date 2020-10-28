@@ -32,6 +32,7 @@ namespace severnmt
         Tranferclint transferClient;
         bool ClintConnction= false;
         int AddIhem = 0;
+        List<queue> queueList = new List<queue>();
 
         List<CheckBox> Boxes = new List<CheckBox>();
         public Form1()
@@ -233,6 +234,7 @@ namespace severnmt
                     ListViewItem item = new ListViewItem(formatted[0]["NameFile"].Value<string>());
                  
                     item.SubItems.Add(formatted[0]["Type"].Value<string>());
+                    item.SubItems.Add("");
                     listfiles.Items.Add(item);
                     CheckBox _checkBox = new CheckBox();
 
@@ -304,6 +306,7 @@ namespace severnmt
             {
                 transferClient.StartTransfer(queue);
             }
+            queueList.Add(queue);
         }
 
         private void Send_Click(object sender, EventArgs e)
@@ -332,9 +335,114 @@ namespace severnmt
         }
 
 
+      
+        
+        private void Progress_Complete()
+        {
+
+            for (int i = 0; i < queueList.Count; i++)
+            {
+
+
+
+
+
+
+
+
+
+                if (queueList[i].Progress == 100 || !queueList[i].Running)
+                {
+                    for (int j = 0; j < listfiles.Items.Count; j++)
+
+
+
+
+                        if (listfiles.Items[j].SubItems[0].Text == Path.GetFileName(queueList[i].Filename))
+                        {
+
+
+
+                            listfiles.Items[j].UseItemStyleForSubItems = false;
+
+                            listfiles.Items[j].SubItems[2].ForeColor = System.Drawing.Color.Green;
+                            listfiles.Items[j].SubItems[2].Text = " 100% Complete";
+
+                            queueList.RemoveAt(i);
+
+
+
+
+                        }
+
+                }
+
+
+                }
+
+
+
+
+
+            }
+
+
+
+        private void progessing()
+        {
+            for (int i = 0; i < queueList.Count; i++)
+            {
+
+
+
+
+
+
+
+
+
+                
+                    for (int j = 0; j < listfiles.Items.Count; j++)
+
+
+
+
+                        if (listfiles.Items[j].SubItems[0].Text == Path.GetFileName(queueList[i].Filename))
+                        {
+
+
+
+                            listfiles.Items[j].UseItemStyleForSubItems = false;
+
+                            listfiles.Items[j].SubItems[2].ForeColor = System.Drawing.Color.Blue;
+                            
+                        
+                        listfiles.Items[j].SubItems[2].Text = queueList[i].Progress.ToString()+"%  Upload ";
+
+                           
+
+                        }
+
+
+                        
+
+
+
+
+                }
+            }
+
+
         private void timer_Tick(object sender, EventArgs e)
         {
          if(!ClintConnction ) { clear_Listview(); }
+
+            progessing();
+            Progress_Complete();
+
+          
+
+
 
         }
 
@@ -381,7 +489,7 @@ namespace severnmt
         {
             ListViewItem item = new ListViewItem(Namefile);
             item.SubItems.Add(type);
-
+            item.SubItems.Add("0% Upload");
             listfiles.Items.Add(item);
             CheckBox _checkBox = new CheckBox();
 
