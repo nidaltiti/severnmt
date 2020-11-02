@@ -40,14 +40,15 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.Addriss = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
+            this.AddrissBox = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripTextBox2 = new System.Windows.Forms.ToolStripTextBox();
+            this.PortBox = new System.Windows.Forms.ToolStripTextBox();
             this.connectbutton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+            this.label_browser = new System.Windows.Forms.ToolStripLabel();
+            this.Open_Browser = new System.Windows.Forms.ToolStripButton();
             this.Reload = new System.Windows.Forms.Button();
             timer = new System.Windows.Forms.Timer(this.components);
             this.toolStrip1.SuspendLayout();
@@ -113,14 +114,15 @@
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Addriss,
             this.toolStripSeparator1,
-            this.toolStripTextBox1,
+            this.AddrissBox,
             this.toolStripSeparator2,
             this.toolStripLabel2,
             this.toolStripSeparator3,
-            this.toolStripTextBox2,
+            this.PortBox,
             this.connectbutton,
             this.toolStripSeparator4,
-            this.toolStripLabel1});
+            this.label_browser,
+            this.Open_Browser});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(800, 38);
@@ -130,19 +132,20 @@
             // Addriss
             // 
             this.Addriss.Name = "Addriss";
-            this.Addriss.Size = new System.Drawing.Size(86, 35);
-            this.Addriss.Text = "toolStripLabel1";
+            this.Addriss.Size = new System.Drawing.Size(62, 35);
+            this.Addriss.Text = "Ip Address";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 38);
             // 
-            // toolStripTextBox1
+            // AddrissBox
             // 
-            this.toolStripTextBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.toolStripTextBox1.Name = "toolStripTextBox1";
-            this.toolStripTextBox1.Size = new System.Drawing.Size(100, 38);
+            this.AddrissBox.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.AddrissBox.Name = "AddrissBox";
+            this.AddrissBox.ReadOnly = true;
+            this.AddrissBox.Size = new System.Drawing.Size(100, 38);
             // 
             // toolStripSeparator2
             // 
@@ -152,19 +155,19 @@
             // toolStripLabel2
             // 
             this.toolStripLabel2.Name = "toolStripLabel2";
-            this.toolStripLabel2.Size = new System.Drawing.Size(86, 35);
-            this.toolStripLabel2.Text = "toolStripLabel2";
+            this.toolStripLabel2.Size = new System.Drawing.Size(29, 35);
+            this.toolStripLabel2.Text = "Port";
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(6, 38);
             // 
-            // toolStripTextBox2
+            // PortBox
             // 
-            this.toolStripTextBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.toolStripTextBox2.Name = "toolStripTextBox2";
-            this.toolStripTextBox2.Size = new System.Drawing.Size(100, 38);
+            this.PortBox.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.PortBox.Name = "PortBox";
+            this.PortBox.Size = new System.Drawing.Size(100, 38);
             // 
             // connectbutton
             // 
@@ -183,11 +186,22 @@
             this.toolStripSeparator4.Name = "toolStripSeparator4";
             this.toolStripSeparator4.Size = new System.Drawing.Size(6, 38);
             // 
-            // toolStripLabel1
+            // label_browser
             // 
-            this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(86, 35);
-            this.toolStripLabel1.Text = "toolStripLabel1";
+            this.label_browser.Name = "label_browser";
+            this.label_browser.Size = new System.Drawing.Size(86, 35);
+            this.label_browser.Text = "toolStripLabel1";
+            // 
+            // Open_Browser
+            // 
+            this.Open_Browser.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.Open_Browser.Image = ((System.Drawing.Image)(resources.GetObject("Open_Browser.Image")));
+            this.Open_Browser.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.Open_Browser.Margin = new System.Windows.Forms.Padding(0, 5, 0, 2);
+            this.Open_Browser.Name = "Open_Browser";
+            this.Open_Browser.Size = new System.Drawing.Size(23, 31);
+            this.Open_Browser.Text = "toolStripButton1";
+            this.Open_Browser.Click += new System.EventHandler(this.Open_Browser_Click);
             // 
             // Reload
             // 
@@ -229,15 +243,16 @@
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripLabel Addriss;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripTextBox toolStripTextBox1;
+        private System.Windows.Forms.ToolStripTextBox AddrissBox;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripLabel toolStripLabel2;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.ToolStripTextBox toolStripTextBox2;
+        private System.Windows.Forms.ToolStripTextBox PortBox;
         private System.Windows.Forms.ToolStripButton connectbutton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
+        private System.Windows.Forms.ToolStripLabel label_browser;
         private System.Windows.Forms.Button Reload;
+        private System.Windows.Forms.ToolStripButton Open_Browser;
     }
 }
 

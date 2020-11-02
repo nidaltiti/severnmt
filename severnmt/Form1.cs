@@ -50,27 +50,59 @@ namespace severnmt
         private void Form1_Load(object sender, EventArgs e)
         {
             outputFolder = "Transfers";
+            myAddriss();
+            label_browser.Text = Path.GetFileName(outputFolder);
 
             //If it does not exist, create it.
             if (!Directory.Exists(outputFolder))
             {
                 Directory.CreateDirectory(outputFolder);
             }
+
+            connction();
+
+
         }
 
-
-        private void Conn_Click(object sender, EventArgs e)
+        private void myAddriss()
         {
+
+
+            var host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (var ip in host.AddressList)
+            {
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    AddrissBox.Text = ip.ToString();
+                }
+
+
+
+
+
+
+            }
+            PortBox.Text = "9";
             
-            Invoke((MethodInvoker)delegate
+        }
+        private void Conn_Click(object sender, EventArgs e)
+        { connction();  }
+      
+        
+        
+        
+        private void connction() { 
+       Invoke((MethodInvoker)delegate
             {
 
                 if (openconntion !=true)
                 {
-                    _listen = new Listen(8);
+                    int tranport = Convert.ToInt32(PortBox.Text);
+                    int port = tranport - 1;
+                    _listen = new Listen(port);
                     _listen.Start();
                     _listen.socketAccpete += _listen_Accepted;
-                    tranlistening = new Listen(9);
+                    tranlistening = new Listen(tranport);
                     tranlistening.Start();
                     tranlistening.socketAccpete += tranlistening_Accepted;
                     connectbutton.Text = "Diconncetion";
@@ -85,6 +117,7 @@ namespace severnmt
 
                         _listen.Stop();
                         tranlistening.Stop();
+                        if(transferClient !=null)
                         transferClient.Close();
                         transferClient = null;
                         if (_cilent != null)
@@ -340,7 +373,7 @@ namespace severnmt
         private void Progress_Complete()
         {
 
-            for (int i = 0; i < queueList.Count; i++)
+            for (int i = 0; i <  queueList.Count; i++)
             {
 
 
@@ -353,7 +386,7 @@ namespace severnmt
 
                 if (queueList[i].Progress == 100 || !queueList[i].Running)
                 {
-                    for (int j = 0; j < listfiles.Items.Count; j++)
+                    for (int j = 0; j <listfiles.Items.Count; j++)
 
 
 
@@ -368,11 +401,13 @@ namespace severnmt
                             listfiles.Items[j].SubItems[2].ForeColor = System.Drawing.Color.Green;
                             listfiles.Items[j].SubItems[2].Text = " 100% Complete";
 
-                            queueList.RemoveAt(i);
+                            
 
-
-
-
+                          //  if(i==0)
+                                queueList.RemoveAt(i);
+                            if (i == 0)
+                            
+                            { break; }
                         }
 
                 }
@@ -506,6 +541,24 @@ namespace severnmt
         {
             e.Effect = DragDropEffects.Copy;
 
+
+
+        }
+
+        private void Open_Browser_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog folder = new FolderBrowserDialog();
+
+          //  folder.ShowDialog();
+        
+       
+        if(folder.ShowDialog() == DialogResult.OK)
+            {
+
+                label_browser.Text = Path.GetFileName(folder.SelectedPath);
+                outputFolder = folder.SelectedPath;
+
+            }
 
 
         }
