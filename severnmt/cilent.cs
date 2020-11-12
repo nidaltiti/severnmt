@@ -20,7 +20,7 @@ namespace severnmt
             private set;
 
         }
-        Socket sck;
+        Socket sck= new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         public cilent(Socket accpet)
         {
             sck = accpet;
@@ -55,7 +55,7 @@ namespace severnmt
                         Receive(this, buf);
 
                     }
-                    if (rec == 0)
+                    if (rec <= 0)
                     {
                         if (Disconnted != null)
                         {
@@ -87,9 +87,14 @@ namespace severnmt
 
                 }
             }
-        
 
-            public void close() {
+        public void send()
+        {
+
+           byte[] byetes = Encoding.ASCII.GetBytes("look");
+            sck.Send(byetes);
+        }
+        public void close() {
 
             sck.Close();
                 }

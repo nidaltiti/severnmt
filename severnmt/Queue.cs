@@ -84,7 +84,7 @@ namespace severnmt
             }
         }
 
-        public static queue CreateDownloadQueue(Tranferclint client, int id, string SName, string saveName,  long length)
+        public static queue CreateDownloadQueue(Tranferclint client, int id,string trpe ,string SName, string saveName,  long length)
         {
             try
             {
@@ -92,7 +92,7 @@ namespace severnmt
                 var queue = new queue();
                 queue.Filename = Path.GetFileName(saveName);
                 queue.Shortename = SName;
-                queue.Client = client;
+                  queue.Client = client;
                   queue.Type = QueueType.Download;
                 //Create our file stream for writing.
                 queue.FS = new FileStream(saveName, FileMode.Create);
@@ -198,6 +198,10 @@ namespace severnmt
                 }
             }
             queue.Close(); //Once the loop is broken, close the queue.
+        }
+        public void Stop()
+        {
+            Running = false;
         }
         public void Close()
         {

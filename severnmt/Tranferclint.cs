@@ -19,6 +19,7 @@ namespace severnmt
         public event TransferEventHandler ProgressChanged; //This will be called when progres is made.
         public event TransferEventHandler Stopped; //This will be called when a transfer is stopped.
         public event TransferEventHandler Complete; //This will be called when a transfer is complete.
+        public event EventHandler Disconnected;//And as you can tell, it will be called upon disconnection.
         public Dictionary<int, queue> Transfers
         {
             get { return _transfers; }
@@ -115,9 +116,9 @@ namespace severnmt
             _buffer = null;
             OutputFolder = null;
 
-            //Call disconnected
-            //if (Disconnected != null)
-            //    Disconnected(this, EventArgs.Empty);
+           // Call disconnected
+            if (Disconnected != null)
+                Disconnected(this, EventArgs.Empty);
         }
 
 
@@ -157,10 +158,11 @@ namespace severnmt
                         //Read the ID, Filename and length of the file (For progress) from the packet.
                         int id = pr.ReadInt32();
                         string fileName = pr.ReadString();
+                        string type = pr.ReadString();
                         long length = pr.ReadInt64();
 
                         //Create our queueload queue.
-                        queue queue = queue.CreateDownloadQueue(this, id, Path.GetFileName(fileName), Path.Combine(OutputFolder,
+                        queue queue = queue.CreateDownloadQueue(this, id,type, Path.GetFileName(fileName), Path.Combine(OutputFolder,
                             Path.GetFileName(fileName)), length);
 
                         //Add it to our transfer list.
@@ -185,29 +187,29 @@ namespace severnmt
                         }
                     }
                     break;
-                //case Headers.Stop:
-                //    {
-                //        //Read the ID
-                //        int id = pr.ReadInt32();
+                case Headers.Stop:
+                    {
+                        //Read the ID
+                        int id = pr.ReadInt32();
 
-                //        if (_transfers.ContainsKey(id))
-                //        {
-                //            //Get the queue.
-                //            TransferQueue queue = _transfers[id];
+                        if (_transfers.ContainsKey(id))
+                        {
+                            //Get the queue.
+                            queue queue = _transfers[id];
 
-                //            //Stop and close the queue
-                //            queue.Stop();
-                //            queue.Close();
+                            //Stop and close the queue
+                            queue.Stop();
+                            queue.Close();
 
-                //            //Call the stopped event.
-                //            if (Stopped != null)
-                //                Stopped(this, queue);
+                            //Call the stopped event.
+                            if (Stopped != null)
+                                Stopped(this, queue);
 
-                //            //Remove the queue
-                //            _transfers.Remove(id);
-                //        }
-                //    }
-                //    break;
+                            //Remove the queue
+                            _transfers.Remove(id);
+                        }
+                    }
+                    break;
                 //case Headers.Pause:
                 //    {
                 //        int id = pr.ReadInt32();
