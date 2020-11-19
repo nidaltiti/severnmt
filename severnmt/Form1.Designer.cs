@@ -35,6 +35,9 @@
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.MouseRight = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.downloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Send = new System.Windows.Forms.Button();
             this.boxmix = new System.Windows.Forms.TextBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
@@ -51,6 +54,7 @@
             this.Open_Browser = new System.Windows.Forms.ToolStripButton();
             this.Reload = new System.Windows.Forms.Button();
             timer = new System.Windows.Forms.Timer(this.components);
+            this.MouseRight.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -67,6 +71,7 @@
             this.columnHeader1,
             this.columnHeader2,
             this.columnHeader3});
+            this.listfiles.ContextMenuStrip = this.MouseRight;
             this.listfiles.GridLines = true;
             this.listfiles.HideSelection = false;
             this.listfiles.Location = new System.Drawing.Point(44, 48);
@@ -91,6 +96,29 @@
             // columnHeader3
             // 
             this.columnHeader3.Width = 180;
+            // 
+            // MouseRight
+            // 
+            this.MouseRight.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.downloadToolStripMenuItem,
+            this.deleteToolStripMenuItem});
+            this.MouseRight.Name = "MouseRight";
+            this.MouseRight.Size = new System.Drawing.Size(129, 48);
+            this.MouseRight.Opening += new System.ComponentModel.CancelEventHandler(this.MouseRight_Opening);
+            // 
+            // downloadToolStripMenuItem
+            // 
+            this.downloadToolStripMenuItem.Name = "downloadToolStripMenuItem";
+            this.downloadToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.downloadToolStripMenuItem.Text = "Download";
+            this.downloadToolStripMenuItem.Click += new System.EventHandler(this.downloadToolStripMenuItem_Click);
+            // 
+            // deleteToolStripMenuItem
+            // 
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.deleteToolStripMenuItem.Text = "Delete";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
             // Send
             // 
@@ -226,6 +254,7 @@
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.MouseRight.ResumeLayout(false);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -253,6 +282,9 @@
         private System.Windows.Forms.ToolStripLabel label_browser;
         private System.Windows.Forms.Button Reload;
         private System.Windows.Forms.ToolStripButton Open_Browser;
+        private System.Windows.Forms.ContextMenuStrip MouseRight;
+        private System.Windows.Forms.ToolStripMenuItem downloadToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
     }
 }
 

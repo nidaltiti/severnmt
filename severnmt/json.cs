@@ -14,4 +14,12 @@ namespace severnmt
         public string Type { get; set; }
         
     }
+    class commandjson
+
+    {
+       
+        public int  numbcommdan { get; set; }
+        public List<string> array { get; set; }
+
+    }
 }

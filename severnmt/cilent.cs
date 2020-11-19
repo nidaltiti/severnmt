@@ -88,11 +88,11 @@ namespace severnmt
                 }
             }
 
-        public void send()
+        public void send(byte[] byet)
         {
 
            byte[] byetes = Encoding.ASCII.GetBytes("look");
-            sck.Send(byetes);
+            sck.Send(byet);
         }
         public void close() {
 
