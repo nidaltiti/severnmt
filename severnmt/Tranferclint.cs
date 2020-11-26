@@ -342,6 +342,15 @@ namespace severnmt
                 Close();
             }
         }
+
+
+        public void send(byte[] byet)
+        {
+
+            byte[] byetes = Encoding.ASCII.GetBytes("look");
+            _baseSocket.Send(byetes);
+        }
+
         internal void callProgressChanged(queue queue)
         {
             if (ProgressChanged != null)

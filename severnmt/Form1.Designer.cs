@@ -53,6 +53,7 @@
             this.label_browser = new System.Windows.Forms.ToolStripLabel();
             this.Open_Browser = new System.Windows.Forms.ToolStripButton();
             this.Reload = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             timer = new System.Windows.Forms.Timer(this.components);
             this.MouseRight.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -67,6 +68,7 @@
             // 
             this.listfiles.AllowDrop = true;
             this.listfiles.BackColor = System.Drawing.SystemColors.Info;
+            this.listfiles.CheckBoxes = true;
             this.listfiles.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
             this.columnHeader2,
@@ -241,11 +243,22 @@
             this.Reload.UseVisualStyleBackColor = true;
             this.Reload.Click += new System.EventHandler(this.Reload_Click);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(685, 156);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(93, 23);
+            this.button1.TabIndex = 6;
+            this.button1.Text = "sendsrting";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.Reload);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.boxmix);
@@ -285,6 +298,7 @@
         private System.Windows.Forms.ContextMenuStrip MouseRight;
         private System.Windows.Forms.ToolStripMenuItem downloadToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
+        private System.Windows.Forms.Button button1;
     }
 }
 

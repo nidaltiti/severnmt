@@ -16,6 +16,7 @@ using Xamarin.Forms;
 using System.Threading;
 using System.Runtime.InteropServices;
 using static severnmt.Tranferclint;
+using System.Diagnostics;
 //using Microsoft.DirectX.AudioVideoPlayback;
 namespace severnmt
 {
@@ -33,6 +34,9 @@ namespace severnmt
         List<cilent> cilents = new List<cilent>();
         Tranferclint transferClient;
         bool ClintConnction = false;
+
+        bool finsh = false;
+
         int AddIhem = 0;
         List<queue> queueList = new List<queue>();
 
@@ -161,6 +165,7 @@ namespace severnmt
                     //  Enabled = false;
                     transferClient.Stopped += TransferClient_Stopped;
 
+                transferClient.Complete += TransferClient_Complete;
                 transferClient.Disconnected += TransferClient_Disconnected; ;
 
                 transferClient.Run();
@@ -169,6 +174,42 @@ namespace severnmt
 
             }
             catch { }
+        }
+     
+        private void TransferClient_Complete(object sender, queue queue)
+        { bool finsh = false;
+            foreach (queue q in queueList)
+            {
+
+                if (q.Progress == 100 || !q.Running)
+                {
+
+
+                    finsh = true;
+
+
+                }
+                else {
+
+                    finsh = false;
+                    break;
+
+                }
+
+
+             }
+            if (finsh) {
+
+                queueList.Clear();
+
+                Process.Start(outputFolder);
+
+            }
+                
+
+
+
+           
         }
 
         private void TransferClient_ProgressChanged(object sender, queue queue)
@@ -310,14 +351,7 @@ namespace severnmt
                     item.SubItems.Add("");
                     listfiles.Items.Add(item);
 
-                    CheckBox _checkBox = new CheckBox();
-
-
-                    System.Drawing.Point _point = new System.Drawing.Point(item.SubItems[1].Bounds.X + 40, item.SubItems[1].Bounds.Y);
-                 //   _checkBox.Click += _checkBox_Click;
-                    _checkBox.Location = _point;
-                    Boxes.Add(_checkBox);
-                    listfiles.Controls.Add(Boxes[AddIhem]);
+                   
 
                     AddIhem++;
 
@@ -402,7 +436,7 @@ namespace severnmt
             }
 
 
-            queueList.Add(queue);
+          
 
 
             //   string namefile = Path.GetFileName(file);
@@ -410,6 +444,10 @@ namespace severnmt
 
             string type = queue.Type == QueueType.Download ? "Download" : "Upload";
 
+         
+            
+            if(type== "Upload")
+            
             AddViewItem(queue.Filename, queue.Typefile, type,queue);
 
 
@@ -417,10 +455,30 @@ namespace severnmt
             if (queue.Type == QueueType.Download)
             {
                 transferClient.StartTransfer(queue);
-               
-                // AddViewItem(queue.Filename, queue.Typefile, "Download");
+
+                existIthem(queue);
+                queueList.Add(queue);
             }
            
+        }
+
+    private void existIthem(queue queue)// check were is name file in Listview to dowload
+       {  
+
+                for (int i = 0; i < listfiles.Items.Count; i++) {
+
+                if ( Path.GetFileName( queue.Filename) == listfiles.Items[i].SubItems[0].Text)
+                {
+
+                    listfiles.Items[i].Tag = queue; //Set the tag to queue so we can grab is easily.
+                    listfiles.Items[i].Name = queue.ID.ToString();
+
+                    listfiles.Items[i].SubItems[2].Text = "0%   Downloading";
+
+
+                }
+
+            }
         }
         List<string> file = new List<string>();
         bool sendfile = false;
@@ -437,12 +495,28 @@ namespace severnmt
                 {
                     foreach (string file in o.FileNames)
                     {
-
+                        bool allowupload = true;
                        // transferClient.QueueTransfer(file);
                       
-                     
+                     for(int i=0; i < listfiles.Items.Count; i++)
+                        {
+                            if(Path.GetFileName(file) == listfiles.Items[i].SubItems[0].Text)
+                            {
 
-                        transferClient.QueueTransfer(file);
+                                allowupload = false;
+                                MessageBox.Show("Please change name"+" file  "+ Path.GetFileName(file) + " this name ready Exist");
+                                break;
+                            }
+
+
+
+                        }
+
+
+                        if (allowupload)
+                        {
+                            transferClient.QueueTransfer(file);
+                        }
 
 
 
@@ -581,7 +655,7 @@ namespace severnmt
 
         private void timer_Tick(object sender, EventArgs e)
         {
-            if (!ClintConnction) { clear_Listview();   
+           if (!ClintConnction) { clear_Listview();   
 
                 listfiles.ContextMenuStrip = null;
             
@@ -599,28 +673,11 @@ namespace severnmt
 
         private void Reload_Click(object sender, EventArgs e)
         {
-            List<string> st = new List<string>();
-            int i = 0;
-            while (i < Boxes.Count)
-            {
-                if (Boxes[i].Checked)
-                {
-
-                    st.Add(listfiles.Items[i].SubItems[0].Text);
+            clear_Listview();
+            string convert = "100";
 
 
 
-
-                }
-                i++;
-            }
-            commandjson _commandjson = new commandjson { numbcommdan = 0 , array = st};
-
-          
-            
-            string convert = JsonConvert.SerializeObject(_commandjson);
-            
-            
             byte[] byet = Encoding.ASCII.GetBytes(convert);
 
 
@@ -654,26 +711,42 @@ namespace severnmt
                 string typefile = Path.GetExtension(files[i]).ToLower().Contains("jpg") || Path.GetExtension(files[i]).ToLower().Contains("png") ? "Image" : "Video";
 
 
-              //  AddViewItem(namefile, typefile, "Upload");
+                //  AddViewItem(namefile, typefile, "Upload");
+
+                bool allowupload = true;
+                // transferClient.QueueTransfer(file);
+
+                for (int j = 0; j< listfiles.Items.Count; j++)
+                {
+                    if (Path.GetFileName(files[i]) == listfiles.Items[j].SubItems[0].Text)
+                    {
+
+                        allowupload = false;
+                        MessageBox.Show("Please change name" + " file  " + Path.GetFileName(files[i]) + " this name ready Exist");
+                        break;
+                    }
 
 
-                fileDrage.Add(files[i]);
+
+                }
+
+
+                if (allowupload)
+                {
+                    transferClient.QueueTransfer(files[i]);
+                }
 
 
 
-               
+               // transferClient.QueueTransfer(files[i]);
+
                 i++;
 
 
 
             }
 
-            i = 0;
-              while(i<fileDrage.Count)
-            { 
-                transferClient.QueueTransfer(fileDrage[i]);
-                i++; }
-
+           
 
 
 
@@ -689,14 +762,7 @@ namespace severnmt
             listfiles.Items.Add(item);
             item.Tag = q; //Set the tag to queue so we can grab is easily.
             item.Name = q.ID.ToString();
-            CheckBox _checkBox = new CheckBox();
-
-
-            System.Drawing.Point _point = new System.Drawing.Point(item.SubItems[1].Bounds.X + 40, item.SubItems[1].Bounds.Y);
-
-            _checkBox.Location = _point;
-            Boxes.Add(_checkBox);
-            listfiles.Controls.Add(Boxes[AddIhem]);
+           
 
             AddIhem++;
         }
@@ -720,6 +786,7 @@ namespace severnmt
 
                 label_browser.Text = Path.GetFileName(folder.SelectedPath);
                 outputFolder = folder.SelectedPath;
+                transferClient.OutputFolder = outputFolder;
 
             }
 
@@ -770,9 +837,9 @@ namespace severnmt
             int i = 0;
             if (num == 0 || num == 1)
             {
-                while (i < Boxes.Count)
+                while (i < listfiles.Items.Count)
                 {
-                    if (Boxes[i].Checked)
+                    if (listfiles.Items[i].Checked)
                     {
 
                         st.Add(listfiles.Items[i].SubItems[0].Text);
@@ -801,9 +868,9 @@ namespace severnmt
 
         private void MouseRight_Opening(object sender, CancelEventArgs e)//check any checkbox is checked
         {
-            foreach (CheckBox chk in Boxes) {
+            for (int i = 0; i < listfiles.Items.Count;i++) {
 
-                if (chk.Checked)
+                if (listfiles.Items[i].Checked)
                 {
                     anycheckbox_ischecked = true;
                     break;
@@ -816,6 +883,19 @@ namespace severnmt
             
             
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string convert = "100";
+
+
+
+            byte[] byet = Encoding.ASCII.GetBytes(convert);
+
+
+
+            transferClient.send(byet);
         }
     }
 }
