@@ -327,7 +327,7 @@ namespace severnmt
 
         private void Cilent_Receive(cilent sender, byte[] Data)
         {
-            string stringdata = Encoding.Default.GetString(Data);
+            string stringdata = Encoding.UTF8.GetString(Data);
 
             //  MessageBox.Show(stringdata);
 
@@ -671,7 +671,7 @@ namespace severnmt
 
         }
 
-        private void Reload_Click(object sender, EventArgs e)
+        private void Refresh_Button(object sender, EventArgs e)
         {
             clear_Listview();
             string convert = "100";
@@ -859,7 +859,7 @@ namespace severnmt
             string convert = JsonConvert.SerializeObject(_commandjson);
 
 
-            byte[] byet = Encoding.ASCII.GetBytes(convert);
+            byte[] byet = Encoding.UTF8.GetBytes(convert);
 
 
 

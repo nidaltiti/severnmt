@@ -38,8 +38,6 @@
             this.MouseRight = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.downloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.Send = new System.Windows.Forms.Button();
-            this.boxmix = new System.Windows.Forms.TextBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.Addriss = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -52,11 +50,20 @@
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.label_browser = new System.Windows.Forms.ToolStripLabel();
             this.Open_Browser = new System.Windows.Forms.ToolStripButton();
-            this.Reload = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.toolStrip2 = new System.Windows.Forms.ToolStrip();
+            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
+            this.RefreshButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
             timer = new System.Windows.Forms.Timer(this.components);
             this.MouseRight.SuspendLayout();
             this.toolStrip1.SuspendLayout();
+            this.toolStrip2.SuspendLayout();
             this.SuspendLayout();
             // 
             // timer
@@ -74,11 +81,12 @@
             this.columnHeader2,
             this.columnHeader3});
             this.listfiles.ContextMenuStrip = this.MouseRight;
+            this.listfiles.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listfiles.GridLines = true;
             this.listfiles.HideSelection = false;
-            this.listfiles.Location = new System.Drawing.Point(44, 48);
+            this.listfiles.Location = new System.Drawing.Point(0, 41);
             this.listfiles.Name = "listfiles";
-            this.listfiles.Size = new System.Drawing.Size(618, 309);
+            this.listfiles.Size = new System.Drawing.Size(723, 381);
             this.listfiles.TabIndex = 1;
             this.listfiles.UseCompatibleStateImageBehavior = false;
             this.listfiles.View = System.Windows.Forms.View.Details;
@@ -122,23 +130,6 @@
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
-            // Send
-            // 
-            this.Send.Location = new System.Drawing.Point(685, 224);
-            this.Send.Name = "Send";
-            this.Send.Size = new System.Drawing.Size(93, 23);
-            this.Send.TabIndex = 2;
-            this.Send.Text = "Send";
-            this.Send.UseVisualStyleBackColor = true;
-            this.Send.Click += new System.EventHandler(this.Send_Click);
-            // 
-            // boxmix
-            // 
-            this.boxmix.Location = new System.Drawing.Point(170, 403);
-            this.boxmix.Name = "boxmix";
-            this.boxmix.Size = new System.Drawing.Size(255, 20);
-            this.boxmix.TabIndex = 3;
-            // 
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -155,7 +146,7 @@
             this.Open_Browser});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(800, 38);
+            this.toolStrip1.Size = new System.Drawing.Size(735, 38);
             this.toolStrip1.TabIndex = 4;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -233,36 +224,96 @@
             this.Open_Browser.Text = "toolStripButton1";
             this.Open_Browser.Click += new System.EventHandler(this.Open_Browser_Click);
             // 
-            // Reload
+            // toolStrip2
             // 
-            this.Reload.Location = new System.Drawing.Point(685, 85);
-            this.Reload.Name = "Reload";
-            this.Reload.Size = new System.Drawing.Size(93, 23);
-            this.Reload.TabIndex = 5;
-            this.Reload.Text = "Reload";
-            this.Reload.UseVisualStyleBackColor = true;
-            this.Reload.Click += new System.EventHandler(this.Reload_Click);
+            this.toolStrip2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel1,
+            this.toolStripTextBox1,
+            this.toolStripButton1,
+            this.toolStripProgressBar1,
+            this.RefreshButton,
+            this.toolStripButton2,
+            this.toolStripSeparator5,
+            this.toolStripButton5,
+            this.toolStripButton4});
+            this.toolStrip2.Location = new System.Drawing.Point(0, 425);
+            this.toolStrip2.Name = "toolStrip2";
+            this.toolStrip2.Size = new System.Drawing.Size(735, 25);
+            this.toolStrip2.TabIndex = 7;
+            this.toolStrip2.Text = "toolStrip2";
             // 
-            // button1
+            // toolStripLabel1
             // 
-            this.button1.Location = new System.Drawing.Point(685, 156);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(93, 23);
-            this.button1.TabIndex = 6;
-            this.button1.Text = "sendsrting";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.toolStripLabel1.Name = "toolStripLabel1";
+            this.toolStripLabel1.Size = new System.Drawing.Size(86, 22);
+            this.toolStripLabel1.Text = "toolStripLabel1";
+            // 
+            // toolStripTextBox1
+            // 
+            this.toolStripTextBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.toolStripTextBox1.Name = "toolStripTextBox1";
+            this.toolStripTextBox1.Size = new System.Drawing.Size(100, 25);
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(99, 22);
+            this.toolStripButton1.Text = "Clear Checkboxs";
+            // 
+            // toolStripProgressBar1
+            // 
+            this.toolStripProgressBar1.Name = "toolStripProgressBar1";
+            this.toolStripProgressBar1.Size = new System.Drawing.Size(100, 22);
+            // 
+            // RefreshButton
+            // 
+            this.RefreshButton.Image = ((System.Drawing.Image)(resources.GetObject("RefreshButton.Image")));
+            this.RefreshButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.RefreshButton.Name = "RefreshButton";
+            this.RefreshButton.Size = new System.Drawing.Size(69, 22);
+            this.RefreshButton.Text = "Refresh ";
+            this.RefreshButton.Click += new System.EventHandler(this.Refresh_Button);
+            // 
+            // toolStripButton2
+            // 
+            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
+            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton2.Name = "toolStripButton2";
+            this.toolStripButton2.Size = new System.Drawing.Size(79, 22);
+            this.toolStripButton2.Text = "Send Files";
+            this.toolStripButton2.Click += new System.EventHandler(this.Send_Click);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripButton5
+            // 
+            this.toolStripButton5.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton5.Image")));
+            this.toolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton5.Name = "toolStripButton5";
+            this.toolStripButton5.Size = new System.Drawing.Size(116, 22);
+            this.toolStripButton5.Text = "Delete All /Select";
+            // 
+            // toolStripButton4
+            // 
+            this.toolStripButton4.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton4.Image")));
+            this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton4.Name = "toolStripButton4";
+            this.toolStripButton4.Size = new System.Drawing.Size(64, 22);
+            this.toolStripButton4.Text = "Setting";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.Reload);
+            this.ClientSize = new System.Drawing.Size(735, 450);
+            this.Controls.Add(this.toolStrip2);
             this.Controls.Add(this.toolStrip1);
-            this.Controls.Add(this.boxmix);
-            this.Controls.Add(this.Send);
             this.Controls.Add(this.listfiles);
             this.Name = "Form1";
             this.Text = "Form1";
@@ -270,6 +321,8 @@
             this.MouseRight.ResumeLayout(false);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.toolStrip2.ResumeLayout(false);
+            this.toolStrip2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -280,8 +333,6 @@
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.ColumnHeader columnHeader3;
-        private System.Windows.Forms.Button Send;
-        private System.Windows.Forms.TextBox boxmix;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripLabel Addriss;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
@@ -293,12 +344,20 @@
         private System.Windows.Forms.ToolStripButton connectbutton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripLabel label_browser;
-        private System.Windows.Forms.Button Reload;
         private System.Windows.Forms.ToolStripButton Open_Browser;
         private System.Windows.Forms.ContextMenuStrip MouseRight;
         private System.Windows.Forms.ToolStripMenuItem downloadToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ToolStrip toolStrip2;
+        private System.Windows.Forms.ToolStripTextBox toolStripTextBox1;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
+        private System.Windows.Forms.ToolStripButton RefreshButton;
+        private System.Windows.Forms.ToolStripButton toolStripButton2;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripButton toolStripButton5;
+        private System.Windows.Forms.ToolStripButton toolStripButton4;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
     }
 }
 
