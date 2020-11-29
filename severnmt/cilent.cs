@@ -91,7 +91,7 @@ namespace severnmt
         public void send(byte[] byet)
         {
 
-           byte[] byetes = Encoding.ASCII.GetBytes("look");
+          
             sck.Send(byet);
         }
         public void close() {

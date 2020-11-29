@@ -145,6 +145,29 @@ namespace severnmt
 
 
         }
+        public int GetOverallProgress()
+        {
+            int overall = 0;
+            try
+            {
+                foreach (KeyValuePair<int, queue> pair in _transfers)
+                {
+                    //Add the progress of each transfer to our variable for calculation
+                    overall += pair.Value.Progress;
+                }
+
+                if (overall > 0)
+                {
+                    //We'll use the formula of
+                    //(OVERALL_PROGRESS * 100) / (PROGRESS_COUNT * 100)
+                    //To gather the overall progess of every transfer.
+                    overall = (overall * 100) / (_transfers.Count * 100);
+                }
+            }
+            catch { overall = 0; /*If there was an issue, just return 0*/ }
+
+            return overall;
+        }
         private void process()
         {
             PacketReader pr = new PacketReader(_buffer); //Create our packet reader.

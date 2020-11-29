@@ -661,7 +661,12 @@ namespace severnmt
             
             
             }
+           
+                if (transferClient == null)
+                    return;
+                ProgressBar.Value = transferClient.GetOverallProgress();
 
+          
          //   progessing();
          //   Progress_Complete();
 
@@ -833,6 +838,7 @@ namespace severnmt
         }
         void checkbox_files(int num)//  send command to clint
         {
+            bool Checked = true;
             List<string> st = new List<string>();
             int i = 0;
             if (num == 0 || num == 1)
@@ -851,7 +857,7 @@ namespace severnmt
                     i++;
                 }
             }
-            else { st.Add(string.Empty); }
+            else { st.Add(string.Empty); Checked = false; }
             commandjson _commandjson = new commandjson { numbcommdan = num, array = st };
 
 
@@ -864,27 +870,78 @@ namespace severnmt
 
 
             _cilent.send(byet);
-        }
 
+
+
+            if (num==1||num==2) {
+
+                type_delete(Checked); }
+                foreach (ListViewItem item in listfiles.Items) { item.Checked = false; }
+
+
+
+
+
+        }
+        private void type_delete(bool check)//type delete file
+        {
+
+
+            if (check)
+            {
+
+
+
+                foreach (ListViewItem item in listfiles.Items)
+                {
+
+
+
+                    if (item.Checked)
+                    {
+
+                        item.UseItemStyleForSubItems = false;
+
+                        item.SubItems[2].ForeColor = System.Drawing.Color.Red;
+                        item.SubItems[2].Text = "Delete ";
+
+
+
+                    };
+                }
+            }
+            else { foreach (ListViewItem item in listfiles.Items) {
+                    item.UseItemStyleForSubItems = false;
+
+                    item.SubItems[2].ForeColor = System.Drawing.Color.Red;
+                    item.SubItems[2].Text = "Delete ";
+                } }
+
+        }
         private void MouseRight_Opening(object sender, CancelEventArgs e)//check any checkbox is checked
         {
-            for (int i = 0; i < listfiles.Items.Count;i++) {
-
-                if (listfiles.Items[i].Checked)
-                {
-                    anycheckbox_ischecked = true;
-                    break;
 
 
-                }
-            
-            
-            
-            
-            
+
+            isChecked();
+
+
+
+
+        }
+        private void isChecked() {
+        for (int i = 0; i < listfiles.Items.Count; i++)
+        {
+                
+            if (listfiles.Items[i].Checked)
+            {
+                anycheckbox_ischecked = true;
+                break;
+
+
             }
         }
-
+        }
         private void button1_Click(object sender, EventArgs e)
         {
             string convert = "100";
@@ -896,6 +953,22 @@ namespace severnmt
 
 
             transferClient.send(byet);
+        }
+
+        private void Delete_Button_Click(object sender, EventArgs e)
+        {
+            isChecked();
+            if (anycheckbox_ischecked)
+            {
+                checkbox_files(1);
+            }
+            else { checkbox_files(2); }
+            anycheckbox_ischecked = false;
+        }
+
+        private void clear_check_Click(object sender, EventArgs e)
+        {
+            foreach (ListViewItem item in listfiles.Items) { item.Checked = false; }
         }
     }
 }

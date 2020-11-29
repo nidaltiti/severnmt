@@ -53,12 +53,12 @@
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
+            this.clear_check = new System.Windows.Forms.ToolStripButton();
+            this.ProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.RefreshButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
+            this.Delete_Button = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
             timer = new System.Windows.Forms.Timer(this.components);
             this.MouseRight.SuspendLayout();
@@ -230,12 +230,12 @@
             this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel1,
             this.toolStripTextBox1,
-            this.toolStripButton1,
-            this.toolStripProgressBar1,
+            this.clear_check,
+            this.ProgressBar,
             this.RefreshButton,
             this.toolStripButton2,
             this.toolStripSeparator5,
-            this.toolStripButton5,
+            this.Delete_Button,
             this.toolStripButton4});
             this.toolStrip2.Location = new System.Drawing.Point(0, 425);
             this.toolStrip2.Name = "toolStrip2";
@@ -255,18 +255,19 @@
             this.toolStripTextBox1.Name = "toolStripTextBox1";
             this.toolStripTextBox1.Size = new System.Drawing.Size(100, 25);
             // 
-            // toolStripButton1
+            // clear_check
             // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(99, 22);
-            this.toolStripButton1.Text = "Clear Checkboxs";
+            this.clear_check.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.clear_check.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.clear_check.Name = "clear_check";
+            this.clear_check.Size = new System.Drawing.Size(99, 22);
+            this.clear_check.Text = "Clear Checkboxs";
+            this.clear_check.Click += new System.EventHandler(this.clear_check_Click);
             // 
-            // toolStripProgressBar1
+            // ProgressBar
             // 
-            this.toolStripProgressBar1.Name = "toolStripProgressBar1";
-            this.toolStripProgressBar1.Size = new System.Drawing.Size(100, 22);
+            this.ProgressBar.Name = "ProgressBar";
+            this.ProgressBar.Size = new System.Drawing.Size(100, 22);
             // 
             // RefreshButton
             // 
@@ -291,13 +292,14 @@
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
             // 
-            // toolStripButton5
+            // Delete_Button
             // 
-            this.toolStripButton5.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton5.Image")));
-            this.toolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton5.Name = "toolStripButton5";
-            this.toolStripButton5.Size = new System.Drawing.Size(116, 22);
-            this.toolStripButton5.Text = "Delete All /Select";
+            this.Delete_Button.Image = ((System.Drawing.Image)(resources.GetObject("Delete_Button.Image")));
+            this.Delete_Button.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.Delete_Button.Name = "Delete_Button";
+            this.Delete_Button.Size = new System.Drawing.Size(116, 22);
+            this.Delete_Button.Text = "Delete All /Select";
+            this.Delete_Button.Click += new System.EventHandler(this.Delete_Button_Click);
             // 
             // toolStripButton4
             // 
@@ -350,12 +352,12 @@
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
         private System.Windows.Forms.ToolStrip toolStrip2;
         private System.Windows.Forms.ToolStripTextBox toolStripTextBox1;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
-        private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
+        private System.Windows.Forms.ToolStripButton clear_check;
+        private System.Windows.Forms.ToolStripProgressBar ProgressBar;
         private System.Windows.Forms.ToolStripButton RefreshButton;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
-        private System.Windows.Forms.ToolStripButton toolStripButton5;
+        private System.Windows.Forms.ToolStripButton Delete_Button;
         private System.Windows.Forms.ToolStripButton toolStripButton4;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
     }
