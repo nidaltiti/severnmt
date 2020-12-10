@@ -28,6 +28,7 @@ namespace severnmt
         private string outputFolder;
         Socket sck;
         cilent _cilent;
+        int movmouse = 1;
         bool anycheckbox_ischecked = false;
         bool openconntion;
         string data;
@@ -175,21 +176,24 @@ namespace severnmt
             }
             catch { }
         }
-     
+
         private void TransferClient_Complete(object sender, queue queue)
-        { bool finsh = false;
+        {
+            bool finsh = false;
             foreach (queue q in queueList)
             {
 
                 if (q.Progress == 100 || !q.Running)
                 {
 
+                
 
-                    finsh = true;
+                finsh = true;
 
 
-                }
-                else {
+            }
+                else
+                {
 
                     finsh = false;
                     break;
@@ -197,19 +201,26 @@ namespace severnmt
                 }
 
 
-             }
-            if (finsh) {
-
-                queueList.Clear();
-
-                Process.Start(outputFolder);
-
             }
-                
+            if (finsh)
+            {
+              
+                queueList.Clear();
+                if (queue.Filename != "list.json")
+                {
+                    Process.Start(outputFolder);
+                }
+                 File.Delete(outputFolder + "\\commad.json");
+               
+            }
+         
 
 
 
-           
+
+
+
+
         }
 
         private void TransferClient_ProgressChanged(object sender, queue queue)
@@ -444,11 +455,11 @@ namespace severnmt
 
             string type = queue.Type == QueueType.Download ? "Download" : "Upload";
 
-         
-            
-            if(type== "Upload")
-            
-            AddViewItem(queue.Filename, queue.Typefile, type,queue);
+
+
+            if (type == "Upload") {
+                if (Path.GetFileName(queue.Filename)!= "commad.json") {
+                    AddViewItem(queue.Filename, queue.Typefile, type, queue); } }
 
 
 
@@ -482,7 +493,9 @@ namespace severnmt
         }
         List<string> file = new List<string>();
         bool sendfile = false;
-        
+
+        public object MouseButtonState { get; private set; }
+
         private void Send_Click(object sender, EventArgs e)
         {
          
@@ -593,14 +606,14 @@ namespace severnmt
 
         }
 
-
+        bool readbool = false;
 
         private void progessing(queue queue)
         {
             try
             {
-             //   for (int i = 0; i < queueList.Count; i++)
-               // {
+                //   for (int i = 0; i < queueList.Count; i++)
+                // {
 
 
 
@@ -611,35 +624,52 @@ namespace severnmt
 
 
 
-                   // for (int j = 0; j < listfiles.Items.Count; j++)
+                // for (int j = 0; j < listfiles.Items.Count; j++)
 
 
 
 
-                      //  if (listfiles.Items[j].SubItems[0].Text == Path.GetFileName(queueList[i].Filename))
-                       // {
+                //  if (listfiles.Items[j].SubItems[0].Text == Path.GetFileName(queueList[i].Filename))
+                // {
 
-
-
-                            listfiles.Items[queue.ID.ToString()].UseItemStyleForSubItems = false;
-
-                            listfiles.Items[queue.ID.ToString()].SubItems[2].ForeColor = queue.Type == QueueType.Download ? System.Drawing.Color.Brown : System.Drawing.Color.Blue;
-
-                            string type = queue.Type == QueueType.Download ? "Downloading" : "Uploading";
-                           // listfiles.Items[j].SubItems[2].Text = queue.Progress.ToString() + "%" + type;
-
-                          listfiles.Items[queue.ID.ToString()].SubItems[2].Text = queue.Progress + "%"+ type;
-
-                if (queue.Progress == 100 || !queue.Running) {
-
+                if (queue.Filename != "list.json" & queue.Filename !="commad.json")
+                {
 
                     listfiles.Items[queue.ID.ToString()].UseItemStyleForSubItems = false;
 
-                    listfiles.Items[queue.ID.ToString()].SubItems[2].ForeColor = System.Drawing.Color.Green;
-                    listfiles.Items[queue.ID.ToString()].SubItems[2].Text = " 100% Complete";
+                    listfiles.Items[queue.ID.ToString()].SubItems[2].ForeColor = queue.Type == QueueType.Download ? System.Drawing.Color.Brown : System.Drawing.Color.Blue;
+
+                    string type = queue.Type == QueueType.Download ? "Downloading" : "Uploading";
+                    // listfiles.Items[j].SubItems[2].Text = queue.Progress.ToString() + "%" + type;
+
+                    listfiles.Items[queue.ID.ToString()].SubItems[2].Text = queue.Progress + "%" + type;
+                }
+
+                    if (queue.Progress == 100 || !queue.Running)
+                    {
+                    if (queue.Filename ==Path.GetFileName( "list.json"))
+                    {
+
+                        readbool = true;
+                           
+                        
+                    }
 
 
-                     }
+                    else
+                    {
+                        if (queue.Filename != "list.json" & queue.Filename != "commad.json")
+                        {
+
+                            listfiles.Items[queue.ID.ToString()].UseItemStyleForSubItems = false;
+
+                            listfiles.Items[queue.ID.ToString()].SubItems[2].ForeColor = System.Drawing.Color.Green;
+                            listfiles.Items[queue.ID.ToString()].SubItems[2].Text = " 100% Complete";
+                        }
+                    }
+                    }
+
+                     
 
 
 
@@ -652,42 +682,95 @@ namespace severnmt
             catch { }
         }
 
+        private void readjsonFile()
+        {
+            using (StreamReader read = new StreamReader(outputFolder + "/list.json"))
+            {
 
+
+                string reader = read.ReadToEnd();
+                string Arrayjson = reader;
+
+
+                JArray formatted = JArray.Parse(Arrayjson);
+
+
+                //ListViewItem item = new ListViewItem(formatted[0]["NameFile"].Value<string>());
+                int i = 0;
+
+                while (i>-1) {
+                    // MessageBox.Show(formatted[i]["NameFile"].Value<string>());
+
+                    try
+                    {
+                        ListViewItem item = new ListViewItem(formatted[i]["NameFile"].Value<string>());
+
+                        item.SubItems.Add(formatted[i]["Type"].Value<string>());
+                        item.SubItems.Add("");
+                        listfiles.Items.Add(item);
+
+
+                        i++;
+                        AddIhem++;
+                    }
+                    catch { break; }
+                  
+                }
+                read.Close();
+                File.Delete(outputFolder + "/list.json");
+            }
+        }
         private void timer_Tick(object sender, EventArgs e)
         {
-           if (!ClintConnction) { clear_Listview();   
+            if (!ClintConnction) { clear_Listview();
 
                 listfiles.ContextMenuStrip = null;
-            
-            
+
+
             }
-           
-                if (transferClient == null)
-                    return;
+
+            if (transferClient == null)
+            
+                return;
                 ProgressBar.Value = transferClient.GetOverallProgress();
 
-          
-         //   progessing();
-         //   Progress_Complete();
 
 
 
+
+            //   progessing();
+            //   Progress_Complete();
+
+
+            if (readbool)
+            {
+                readbool = false;
+
+
+                readjsonFile();
+
+            }
 
 
         }
 
         private void Refresh_Button(object sender, EventArgs e)
         {
+            commandjson _commandjson = new commandjson { numbcommdan = 100 };
+
+
+            //   JsonConvert.SerializeObject(json_list)
+            string convert = JsonConvert.SerializeObject(_commandjson);
+            StreamWriter witer = new StreamWriter(outputFolder + "\\commad.json");
+
+            witer.Write(convert);
+
+            witer.Close();
+
+            transferClient.QueueTransfer(outputFolder + "\\commad.json");
+            
             clear_Listview();
-            string convert = "100";
-
-
-
-            byte[] byet = Encoding.ASCII.GetBytes(convert);
-
-
-
-            _cilent.send(byet);
+          
         }
 
         private void listfiles_DragDrop(object sender, DragEventArgs e)
@@ -861,15 +944,22 @@ namespace severnmt
             commandjson _commandjson = new commandjson { numbcommdan = num, array = st };
 
 
-
+         //   JsonConvert.SerializeObject(json_list)
             string convert = JsonConvert.SerializeObject(_commandjson);
+            StreamWriter witer = new StreamWriter(outputFolder + "\\commad.json");
+
+            witer.Write(convert);
+
+            witer.Close();
+
+            transferClient.QueueTransfer(outputFolder + "\\commad.json");
 
 
-            byte[] byet = Encoding.UTF8.GetBytes(convert);
+            //  byte[] byet = Encoding.UTF8.GetBytes(convert);
 
 
 
-            _cilent.send(byet);
+            //  _cilent.send(byet);
 
 
 
@@ -969,6 +1059,62 @@ namespace severnmt
         private void clear_check_Click(object sender, EventArgs e)
         {
             foreach (ListViewItem item in listfiles.Items) { item.Checked = false; }
+        }
+
+        private void sreachbox_Enter(object sender, KeyEventArgs e)
+        {
+
+
+            if (e.KeyCode == Keys.Enter) {
+
+
+                foreach (ListViewItem items in listfiles.Items)
+                {
+
+                    if (items.SubItems[0].Text.ToLower().Contains(sreachbox.Text)|| items.SubItems[0].Text.ToUpper().Contains(sreachbox.Text)) { items.Checked = true; }
+
+
+                }
+            }
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+
+        }
+        int movx, movy;
+        private void toolStripLabel3_MouseDown(object sender, MouseEventArgs e)
+        {
+
+
+           if (e.Button == MouseButtons.Left)
+    {
+        // Release the mouse capture started by the mouse down.
+       // lblMoveForm.Capture = false;
+
+        // Create and send a WM_NCLBUTTONDOWN message.
+        const int WM_NCLBUTTONDOWN = 0x00A1;
+        const int HTCAPTION = 2;
+        Message msg =
+            Message.Create(this.Handle, WM_NCLBUTTONDOWN,
+                new IntPtr(HTCAPTION), IntPtr.Zero);
+        this.DefWndProc(ref msg);
+    }
+
+        }
+
+        private void toolStripLabel3_MouseUp(object sender, MouseEventArgs e)
+        {
+            movmouse = 0;
+        }
+
+        private void toolStripLabel3_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (movmouse==1)
+            {
+                this.SetDesktopLocation(MousePosition.X  , MousePosition.Y );
+            
+            }
         }
     }
 }
