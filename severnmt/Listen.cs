@@ -3,89 +3,120 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Net;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Net.Sockets;
-using System.Threading;
-
+using System.Net;
+using System.Windows.Forms;
 namespace severnmt
 {
-    class Listen
-        
+    internal delegate void SocketAcceptedHandler(object sender, Listen e);
+    internal class Listen : EventArgs
+
     {
-        Socket _socket;
-        public bool listenring
-        { 
-            get;
-
-            private set;
-                
-                
-                }
-        public int Port
+        public Socket Accepted
         {
             get;
-
             private set;
-
-        }
-        public Listen(int port) {
-
-            Port = port;
-
-            _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-
         }
 
-        public void Start() {
-            if (listenring) return;
-            IPEndPoint localtion = new IPEndPoint(IPAddress.Any, Port);
-
-
-            try
-            {
-                _socket.Bind(localtion);
-                _socket.Listen(0);
-                _socket.BeginAccept(Callback, null);
-
-                listenring = true;
-            }
-            catch { }
-
-        }
-        public void Stop() { if (!listenring) 
-                return;
-
-            _socket.Close();
-            _socket.Dispose();
-
-            _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-
-
-        }
-        void Callback (IAsyncResult ar)
+        public IPAddress Address
         {
-            try {
-
-
-                Socket _socketAcc = _socket.EndAccept(ar);
-
-                if(socketAccpete != null) { socketAccpete(_socketAcc); }
-                _socket.BeginAccept(Callback, null);
-
-
-
-
-            }
-            catch { }
-        
-        
-        
-        
-        
+            get;
+            private set;
         }
-     
-        public delegate void SocketAccpetedHandler(Socket e);
-        public event SocketAccpetedHandler socketAccpete;
+
+        public IPEndPoint EndPoint
+        {
+            get;
+            private set;
+        }
+
+        public Listen(Socket sck)
+        {
+            Accepted = sck;
+            Address = ((IPEndPoint)sck.RemoteEndPoint).Address;
+            EndPoint = (IPEndPoint)sck.RemoteEndPoint;
+        }
     }
 
-}
+    internal class Listener
+    {
+        #region Variables
+        private Socket _socket = null;
+        private bool _running = false;
+        private int _port = -1;
+        #endregion
+
+        #region Properties
+        public Socket BaseSocket
+        {
+            get { return _socket; }
+        }
+
+        public bool Running
+        {
+            get { return _running; }
+        }
+
+        public int Port
+        {
+            get { return _port; }
+        }
+        #endregion
+
+        public event SocketAcceptedHandler Accepted;
+
+        public Listener()
+        {
+
+        }
+
+        public void Start(int port)
+        {
+            if (_running)
+                return;
+
+            _port = port;
+            _running = true;
+            _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            _socket.Bind(new IPEndPoint(IPAddress.Any, port));
+            _socket.Listen(port);
+            _socket.BeginAccept(acceptCallback, null);
+        }
+
+        public void Stop()
+        {
+            if (!_running)
+                return;
+
+            _running = false;
+            _socket.Close();
+        }
+
+        private void acceptCallback(IAsyncResult ar)
+        {
+            try
+            {
+                Socket sck = _socket.EndAccept(ar);
+
+                if (Accepted != null)
+                {
+                    Accepted(this, new Listen(sck));
+                }
+            }
+            catch
+            {
+            }
+
+            if (_running)
+                _socket.BeginAccept(acceptCallback, null);
+        }
+    }
+
+   
+    }
+
+

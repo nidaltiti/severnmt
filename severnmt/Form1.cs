@@ -24,7 +24,7 @@ namespace severnmt
     public partial class Form1 : Form
     {
         Listen _listen;
-        Listen tranlistening;
+        Listener tranlistening;
         private string outputFolder;
         Socket sck;
         cilent _cilent;
@@ -35,7 +35,7 @@ namespace severnmt
         List<cilent> cilents = new List<cilent>();
         Tranferclint transferClient;
         bool ClintConnction = false;
-
+        bool chekconnction = false; // key check if socket  is conncet is no
         bool finsh = false;
 
         int AddIhem = 0;
@@ -106,24 +106,24 @@ namespace severnmt
                      {
 
                          int tranport = Convert.ToInt32(PortBox.Text);
-                         int port = tranport - 1;
-                         _listen = new Listen(port);
-                         _listen.Start();
-                         _listen.socketAccpete += _listen_Accepted;
-                         tranlistening = new Listen(tranport);
-                         tranlistening.Start();
-                         tranlistening.socketAccpete += tranlistening_Accepted;
+                         //int port = tranport - 1;
+                        // _listen = new Listen(port);
+                        // _listen.Start();
+                      //   _listen.socketAccpete += _listen_Accepted;
+                         tranlistening = new Listener();
+                         tranlistening.Start(tranport);
+                         tranlistening.Accepted += tranlistening_Accepted;
                          connectbutton.Text = "Diconncetion";
                         
-                   //  ClintConnction = true;
-                   openconntion = true;
+                    //  ClintConnction = true;
+                    openconntion = true;
                      }
                      else {
 
                          try
                          {
 
-                             _listen.Stop();
+                          //   _listen.Stop();
                              tranlistening.Stop();
                              if (transferClient != null)
                                  transferClient.Close();
@@ -133,19 +133,20 @@ namespace severnmt
 
                                  _cilent.close();
                              }
-                             transferClient = new Tranferclint();
+                           //  transferClient = new Tranferclint();
                          }
                          catch { }
                          connectbutton.Text = "Conncetion";
-                         listfiles.ContextMenuStrip = null;
+                        // listfiles.ContextMenuStrip = null;
                         openconntion = false;
+                         chekconnction = false;
                      }
 
                  });
 
         }
 
-        private void tranlistening_Accepted(Socket Sk)
+        private void tranlistening_Accepted(object sender, Listen e)
         {
             try
             {
@@ -155,8 +156,8 @@ namespace severnmt
                     // return;
                     //Create our new transfer client.
                     //And attempt to connect
-                    transferClient = new Tranferclint();
-                    transferClient.Connect(Sk);
+                    transferClient = new Tranferclint(e.Accepted);
+                    //transferClient.Connect(Sk);
                     transferClient.OutputFolder = outputFolder;
                     //  Run the client
                    
@@ -168,7 +169,8 @@ namespace severnmt
 
                 transferClient.Complete += TransferClient_Complete;
                 transferClient.Disconnected += TransferClient_Disconnected; ;
-
+                ClintConnction = true;
+                chekconnction = true;
                 transferClient.Run();
 
 
@@ -176,7 +178,7 @@ namespace severnmt
             }
             catch { }
         }
-
+        bool finshQ = true;
         private void TransferClient_Complete(object sender, queue queue)
         {
             bool finsh = false;
@@ -194,7 +196,7 @@ namespace severnmt
             }
                 else
                 {
-
+                    finshQ = false;
                     finsh = false;
                     break;
 
@@ -204,14 +206,14 @@ namespace severnmt
             }
             if (finsh)
             {
-              
+                finshQ = true;
                 queueList.Clear();
                 if (queue.Filename != "list.json")
                 {
                     Process.Start(outputFolder);
                 }
                  File.Delete(outputFolder + "\\commad.json");
-               
+                chekconnction = true;
             }
          
 
@@ -238,10 +240,18 @@ namespace severnmt
 
         private void TransferClient_Disconnected(object sender, EventArgs e)
         {
+            if (InvokeRequired)
+            {
+                Invoke(new EventHandler(TransferClient_Disconnected), sender, e);
+                return;
+            }
             // throw new NotImplementedException();
             foreach (queue q in queueList) { q.Close(); }
+            transferClient.Close();
             transferClient = null;
             deregisterEvents();
+            clear_Listview();
+            //ClintConnction = false;
         }
 
         private void TransferClient_Stopped(object sender, queue queue)
@@ -253,16 +263,16 @@ namespace severnmt
         }
 
         // List<cilent> cilentlist = new List<cilent>();
-        private void _listen_Accepted(Socket Sk)
-        {
+   //     private void _listen_Accepted(Socket Sk)
+    //    {
             // sck = Sk;
             //  MessageBox.Show("connct");
-            cilent cilent = new cilent(Sk);
-            cilent.Receive += Cilent_Receive;
-            cilent.Disconnted += Cilent_Disconnted;
-            ClintConnction = true;
-            listfiles.ContextMenuStrip = MouseRight;
-            _cilent = cilent;
+           // cilent cilent = new cilent(Sk);
+          //  cilent.Receive += Cilent_Receive;
+           // cilent.Disconnted += Cilent_Disconnted;
+          //  ClintConnction = true;
+           // listfiles.ContextMenuStrip = MouseRight;
+          //  _cilent = cilent;
 
 
             // cilents.Add(cilent);
@@ -277,52 +287,9 @@ namespace severnmt
 
 
 
-        }
+      //  }
 
-        private void Cilent_Disconnted(cilent sender)
-        {
-            try
-            {
-
-                //tranlistening.Stop();
-                //  _listen = null;
-            }
-            catch { MessageBox.Show("filed"); }
-
-            new Thread(() =>
-            {
-                //   _listen.Stop();
-                _cilent.close();
-                sender.close();
-                queueList.Clear();
-                //transferClient.Close();
-                ClintConnction = false;
-                //  clear_Listview();
-                if (openconntion)
-                {
-                    //_listen = new Listen(8);
-                    //_listen.Start();
-                    ////tranlistening = new Listen(9);
-                    ////tranlistening.Start();
-                    //_listen.socketAccpete += _listen_Accepted;
-                    Thread.Sleep(500);
-                }
-            }).Start();
-
-
-            //tranlistening = new Listen(9);
-
-
-            Invoke((MethodInvoker)delegate
-            {
-                //  new Thread(() => { Thread.Sleep(1000); }).Start();
-
-
-                // MessageBox.Show("close");
-
-
-            });
-        }
+   
 
         //private void _Cilent_Receive(cilent sender, byte[] data)
         //{
@@ -336,73 +303,7 @@ namespace severnmt
             throw new NotImplementedException();
         }
 
-        private void Cilent_Receive(cilent sender, byte[] Data)
-        {
-            string stringdata = Encoding.UTF8.GetString(Data);
-
-            //  MessageBox.Show(stringdata);
-
-
-            this.Invoke((MethodInvoker)delegate
-            {
-
-
-                try
-                {
-
-                    string Arrayjson = "[" + stringdata + "]";
-
-
-                    JArray formatted = JArray.Parse(Arrayjson);
-
-
-                    ListViewItem item = new ListViewItem(formatted[0]["NameFile"].Value<string>());
-
-                    item.SubItems.Add(formatted[0]["Type"].Value<string>());
-                    item.SubItems.Add("");
-                    listfiles.Items.Add(item);
-
-                   
-
-                    AddIhem++;
-
-
-
-
-                }
-                catch
-                {
-                    // int fox = Data.Length;
-
-                    //This means we're trying to disconnect.
-                    //  if (fox == 0)
-                    //  {
-
-                    //   // MessageBox.Show(stringdata);
-
-                    //  // _listen.Stop();
-                    //  // tranlistening.Stop();
-
-                    //}
-                    //else
-                    //{
-                    //    if (ClintConnction)
-                    //    {
-                    //        // int fox = Data.Length;
-
-
-                    //        ClintConnction = false;
-                    //    }
-
-
-                    //  }
-
-                }
-
-            });
-
-
-        }
+      
 
         private void _checkBox_Click(object sender, EventArgs e)
         {
@@ -440,6 +341,7 @@ namespace severnmt
         //  private Tranferclint transferClient=new  Tranferclint;
         private void TransferClient_Queued(object sender, queue queue)
         {
+            chekconnction = false;
             if (InvokeRequired)
             {
                 Invoke(new TransferEventHandler(TransferClient_Queued), sender, queue);
@@ -513,7 +415,7 @@ namespace severnmt
                       
                      for(int i=0; i < listfiles.Items.Count; i++)
                         {
-                            if(Path.GetFileName(file) == listfiles.Items[i].SubItems[0].Text)
+                            if(Path.GetFileName(file) == listfiles.Items[i].SubItems[0].Text )
                             {
 
                                 allowupload = false;
@@ -631,18 +533,27 @@ namespace severnmt
 
                 //  if (listfiles.Items[j].SubItems[0].Text == Path.GetFileName(queueList[i].Filename))
                 // {
-
+               
                 if (queue.Filename != "list.json" & queue.Filename !="commad.json")
                 {
+                    try
 
-                    listfiles.Items[queue.ID.ToString()].UseItemStyleForSubItems = false;
+                    {
+                        
+                        listfiles.Items[queue.ID.ToString()].UseItemStyleForSubItems = false;
 
-                    listfiles.Items[queue.ID.ToString()].SubItems[2].ForeColor = queue.Type == QueueType.Download ? System.Drawing.Color.Brown : System.Drawing.Color.Blue;
 
-                    string type = queue.Type == QueueType.Download ? "Downloading" : "Uploading";
-                    // listfiles.Items[j].SubItems[2].Text = queue.Progress.ToString() + "%" + type;
+                        listfiles.Items[queue.ID.ToString()].SubItems[2].ForeColor = queue.Type == QueueType.Download ? System.Drawing.Color.Brown : System.Drawing.Color.Blue;
 
-                    listfiles.Items[queue.ID.ToString()].SubItems[2].Text = queue.Progress + "%" + type;
+                        string type = queue.Type == QueueType.Download ? "Downloading" : "Uploading";
+                        //listfiles.Items[j].SubItems[2].Text = queue.Progress.ToString() + "%" + type;
+
+                        listfiles.Items[queue.ID.ToString()].SubItems[2].Text = queue.Progress + "%" + type;
+
+                         
+
+                    }
+                    catch { }
                 }
 
                     if (queue.Progress == 100 || !queue.Running)
@@ -722,19 +633,45 @@ namespace severnmt
         }
         private void timer_Tick(object sender, EventArgs e)
         {
-            if (!ClintConnction) { clear_Listview();
 
-                listfiles.ContextMenuStrip = null;
+            if (chekconnction )
+            {
+                try
+                {
+                    ClintConnction = transferClient.SocketConnected();
+                    if (ClintConnction == false)
+                    {
 
+
+
+
+                        clear_Listview();
+
+
+
+
+
+                        //listfiles.ContextMenuStrip = null;
+
+
+
+                    }
+                }
+                catch { }
 
             }
+
+
+
+             
+         //   try { ClintConnction = transferClient.SocketConnected(); } catch { }
 
             if (transferClient == null)
             
                 return;
                 ProgressBar.Value = transferClient.GetOverallProgress();
 
-
+            ClintConnction = transferClient.SocketConnected();
 
 
 
@@ -770,7 +707,7 @@ namespace severnmt
             transferClient.QueueTransfer(outputFolder + "\\commad.json");
             
             clear_Listview();
-          
+            //transferClient.QueueTransfer("");
         }
 
         private void listfiles_DragDrop(object sender, DragEventArgs e)
@@ -1011,12 +948,12 @@ namespace severnmt
         private void MouseRight_Opening(object sender, CancelEventArgs e)//check any checkbox is checked
         {
 
-
+           
 
             isChecked();
 
-
-
+           if(anycheckbox_ischecked) { MouseRight.Enabled = true; }
+            else { MouseRight.Enabled = true; }
 
         }
         private void isChecked() {
@@ -1042,7 +979,7 @@ namespace severnmt
 
 
 
-            transferClient.send(byet);
+           // transferClient.send(byet);
         }
 
         private void Delete_Button_Click(object sender, EventArgs e)
@@ -1106,6 +1043,24 @@ namespace severnmt
         private void toolStripLabel3_MouseUp(object sender, MouseEventArgs e)
         {
             movmouse = 0;
+        }
+
+        private void toolStripButton4_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(transferClient.SocketConnected().ToString());
+        }
+
+        private void toolStripButton1_Click_1(object sender, EventArgs e)
+        {
+            isChecked();
+
+            if (anycheckbox_ischecked)
+            {
+                checkbox_files(0);
+            }
+            else { checkbox_files(3); }
+            anycheckbox_ischecked = false;
+
         }
 
         private void toolStripLabel3_MouseMove(object sender, MouseEventArgs e)

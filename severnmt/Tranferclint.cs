@@ -20,6 +20,15 @@ namespace severnmt
         public event TransferEventHandler Stopped; //This will be called when a transfer is stopped.
         public event TransferEventHandler Complete; //This will be called when a transfer is complete.
         public event EventHandler Disconnected;//And as you can tell, it will be called upon disconnection.
+
+        public Tranferclint(Socket sock)
+        {
+            //Set the socket.
+            _baseSocket = sock;
+            //Grab the end point.
+            EndPoint = (IPEndPoint)_baseSocket.RemoteEndPoint;
+        }
+
         public Dictionary<int, queue> Transfers
         {
             get { return _transfers; }
@@ -367,11 +376,14 @@ namespace severnmt
         }
 
 
-        public void send(byte[] byet)
+     public   bool SocketConnected ()
         {
-
-            byte[] byetes = Encoding.ASCII.GetBytes("look");
-            _baseSocket.Send(byetes);
+            bool part1 = _baseSocket.Poll(1000, SelectMode.SelectRead);
+            bool part2 = (_baseSocket.Available == 0);
+            if (part1 && part2)
+                return false;
+            else
+                return true;
         }
 
         internal void callProgressChanged(queue queue)
