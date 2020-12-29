@@ -34,6 +34,7 @@ namespace severnmt
         string data;
         List<cilent> cilents = new List<cilent>();
         Tranferclint transferClient;
+        bool Refresh;
         bool ClintConnction = false;
         bool chekconnction = false; // key check if socket  is conncet is no
         bool finsh = false;
@@ -56,7 +57,10 @@ namespace severnmt
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            outputFolder = "Transfers";
+           buttons_Enabled(false);
+         //   outputFolder = Properties.Settings.Default.FolderName;
+            tansfer_form_properties();
+
             myAddriss();
             label_browser.Text = Path.GetFileName(outputFolder);
 
@@ -89,7 +93,7 @@ namespace severnmt
 
 
             }
-            PortBox.Text = "9";
+            PortBox.Text = Properties.Settings.Default.Port.ToString();
 
         }
         private void Conn_Click(object sender, EventArgs e)
@@ -105,7 +109,7 @@ namespace severnmt
                      if (openconntion != true)
                      {
 
-                         int tranport = Convert.ToInt32(PortBox.Text);
+                         int tranport = Properties.Settings.Default.Port;
                          //int port = tranport - 1;
                         // _listen = new Listen(port);
                         // _listen.Start();
@@ -173,10 +177,26 @@ namespace severnmt
                 chekconnction = true;
                 transferClient.Run();
 
-
+             
 
             }
             catch { }
+          
+        }
+
+        void buttons_Enabled(bool Enabled) {
+
+            MouseRight.Items[0].Enabled = Enabled;
+
+            MouseRight.Items[1].Enabled = Enabled;
+
+            MouseRight.Items[2].Enabled = Enabled;
+
+            clear_check.Enabled = Enabled;
+            RefreshButton.Enabled = Enabled;
+            senderB.Enabled = Enabled;
+            Delete_Button.Enabled = Enabled;
+            Download_button.Enabled = Enabled;
         }
         bool finshQ = true;
         private void TransferClient_Complete(object sender, queue queue)
@@ -204,26 +224,49 @@ namespace severnmt
 
 
             }
+            bool uploadin = false;
+
+           
+
+           
             if (finsh)
             {
+                
                 finshQ = true;
                 queueList.Clear();
                 if (queue.Filename != "list.json")
                 {
+                   //
                     Process.Start(outputFolder);
                 }
+               
+
+                
+
                  File.Delete(outputFolder + "\\commad.json");
                 chekconnction = true;
-            }
+
+
+                if (queue.Filename != "list.json") { if (Refresh) { freah = true; } }
+                
+              
+
+
          
 
 
 
 
 
-
+        }
+          
 
         }
+
+
+
+
+        bool freah = false;
 
         private void TransferClient_ProgressChanged(object sender, queue queue)
         {
@@ -361,7 +404,15 @@ namespace severnmt
 
             if (type == "Upload") {
                 if (Path.GetFileName(queue.Filename)!= "commad.json") {
-                    AddViewItem(queue.Filename, queue.Typefile, type, queue); } }
+                    AddViewItem(queue.Filename, queue.Typefile, type, queue);
+
+
+               
+
+
+
+
+                } }
 
 
 
@@ -403,7 +454,7 @@ namespace severnmt
          
             using (OpenFileDialog o = new OpenFileDialog())
             {
-                o.Filter = "All Files (*.*)|*.*";
+                o.Filter = "Files (*.jpeg;*.png;*.jpg;*.mp4;*.avi *.mov)|*.jpeg;*.png;*.jpg; *.mp4; *.avi; *.mov;";
                 o.Multiselect = true;
 
                 if (o.ShowDialog() == System.Windows.Forms.DialogResult.OK)
@@ -642,12 +693,12 @@ namespace severnmt
                     if (ClintConnction == false)
                     {
 
+                       
 
-
-
+                        //buttons_Enabled(false);
                         clear_Listview();
 
-
+                        buttons_Enabled(false);
 
 
 
@@ -656,6 +707,7 @@ namespace severnmt
 
 
                     }
+                    else { buttons_Enabled(true); }
                 }
                 catch { }
 
@@ -687,11 +739,14 @@ namespace severnmt
                 readjsonFile();
 
             }
+            if (freah) { freah = false;
 
+                Refreshing();
+            
+            }
 
         }
-
-        private void Refresh_Button(object sender, EventArgs e)
+        private void Refreshing()
         {
             commandjson _commandjson = new commandjson { numbcommdan = 100 };
 
@@ -705,8 +760,12 @@ namespace severnmt
             witer.Close();
 
             transferClient.QueueTransfer(outputFolder + "\\commad.json");
-            
+
             clear_Listview();
+        }
+        private void Refresh_Button(object sender, EventArgs e)
+        {
+            Refreshing();
             //transferClient.QueueTransfer("");
         }
 
@@ -717,51 +776,40 @@ namespace severnmt
             int i = 0;
             while (i < files.Length)
             {
-                //ListViewItem item = new ListViewItem(Path.GetFileName(files[i]));
-                //item.SubItems.Add(Path.GetExtension(files[i]).ToLower().Contains("jpg") ||Path.GetExtension(files[i]).ToLower().Contains("png") ? "Image" : "Video");
 
-                //listfiles.Items.Add(item);
-                //CheckBox _checkBox = new CheckBox();
+                if (draging_file_Extension(files[i])) {
 
 
-                //System.Drawing.Point _point = new System.Drawing.Point(item.SubItems[1].Bounds.X + 40, item.SubItems[1].Bounds.Y);
-
-                //_checkBox.Location = _point;
-                //Boxes.Add(_checkBox);
-                //listfiles.Controls.Add(Boxes[AddIhem]);
-
-                //AddIhem++;
-
-                string namefile = Path.GetFileName(files[i]);
-                string typefile = Path.GetExtension(files[i]).ToLower().Contains("jpg") || Path.GetExtension(files[i]).ToLower().Contains("png") ? "Image" : "Video";
+                    string namefile = Path.GetFileName(files[i]);
+                    string typefile = Path.GetExtension(files[i]).ToLower().Contains("jpg") || Path.GetExtension(files[i]).ToLower().Contains("png") ? "Image" : "Video";
 
 
-                //  AddViewItem(namefile, typefile, "Upload");
+                    //  AddViewItem(namefile, typefile, "Upload");
 
-                bool allowupload = true;
-                // transferClient.QueueTransfer(file);
+                    bool allowupload = true;
+                    // transferClient.QueueTransfer(file);
 
-                for (int j = 0; j< listfiles.Items.Count; j++)
-                {
-                    if (Path.GetFileName(files[i]) == listfiles.Items[j].SubItems[0].Text)
+                    for (int j = 0; j < listfiles.Items.Count; j++)
                     {
+                        if (Path.GetFileName(files[i]) == listfiles.Items[j].SubItems[0].Text)
+                        {
 
-                        allowupload = false;
-                        MessageBox.Show("Please change name" + " file  " + Path.GetFileName(files[i]) + " this name ready Exist");
-                        break;
+                            allowupload = false;
+                            MessageBox.Show("Please change name" + " file  " + Path.GetFileName(files[i]) + " this name ready Exist");
+                            break;
+                        }
+
+
+
                     }
 
 
+                    if (allowupload)
+                    {
+                        transferClient.QueueTransfer(files[i]);
+                    }
 
                 }
-
-
-                if (allowupload)
-                {
-                    transferClient.QueueTransfer(files[i]);
-                }
-
-
 
                // transferClient.QueueTransfer(files[i]);
 
@@ -770,6 +818,7 @@ namespace severnmt
 
 
             }
+            
 
            
 
@@ -778,6 +827,35 @@ namespace severnmt
 
 
             // MessageBox.Show(m[]);
+        }
+        private bool draging_file_Extension(string file) {
+            bool ret = false;
+
+            switch (Path.GetExtension(file))
+            {
+                case ".jpg": { ret = true;  break; }
+
+
+                case ".png": { ret = true; break; }
+                
+                case ".jpeg": { ret = true; break; }
+
+                case ".mp4": { ret = true; break; }
+                
+                case ".avi": { ret = true; break; }
+               
+                case ".mov": { ret = true; break; }
+
+
+            }
+
+
+            return ret;
+
+
+
+
+
         }
         private void AddViewItem(string Namefile, string type, string pros, queue q)
         {
@@ -987,9 +1065,23 @@ namespace severnmt
             isChecked();
             if (anycheckbox_ischecked)
             {
-                checkbox_files(1);
+
+                DialogResult _DialogResult = MessageBox.Show(" you Sure Delete selected files", "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                if (_DialogResult == DialogResult.OK) {
+                    checkbox_files(1); }
             }
-            else { checkbox_files(2); }
+            else {
+
+
+
+                DialogResult _DialogResult = MessageBox.Show(" you Sure Delete all files", "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+               
+                if (_DialogResult == DialogResult.OK) { checkbox_files(2); }
+
+
+
+                    ; 
+            }
             anycheckbox_ischecked = false;
         }
 
@@ -1047,8 +1139,49 @@ namespace severnmt
 
         private void toolStripButton4_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(transferClient.SocketConnected().ToString());
+            Setting_from setting = new Setting_from();
+          
+
+            setting.infomation += Setting_infomation;
+
+            setting.ShowDialog();
         }
+
+        private void Setting_infomation(object s)
+        {
+            Save_paramter Save_Setting = (Save_paramter)s;
+
+            //   MessageBox.Show(Save_Setting.namefollder+ Save_Setting.port+ Save_Setting.Refresh+ Save_Setting.GallryAtudo+ Save_Setting.Tow_Dictionary);
+            save_To_properties(Save_Setting);
+            connction();
+            connction();
+        }
+   private void save_To_properties(Save_paramter S)
+        {
+
+
+
+            Properties.Settings.Default.FolderName = S.namefollder;
+
+            Properties.Settings.Default.Port = S.port;
+            Properties.Settings.Default.AutoRefreach = S.Refresh;
+            Properties.Settings.Default.Tow_dictionary = S.Tow_Dictionary;
+            Properties.Settings.Default.SaveGarllery = S.GallryAtudo;
+            Properties.Settings.Default.Save();
+            tansfer_form_properties();
+            }
+
+
+      private void  tansfer_form_properties() {
+            PortBox.Text = Properties.Settings.Default.Port.ToString();
+
+            outputFolder = Properties.Settings.Default.FolderName;
+            label_browser.Text = Path.GetFileNameWithoutExtension(outputFolder);
+            Refresh = Properties.Settings.Default.AutoRefreach;
+
+        }
+
+
 
         private void toolStripButton1_Click_1(object sender, EventArgs e)
         {

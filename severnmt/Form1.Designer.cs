@@ -49,8 +49,6 @@
             this.PortBox = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.label_browser = new System.Windows.Forms.ToolStripLabel();
-            this.Open_Browser = new System.Windows.Forms.ToolStripButton();
-            this.connectbutton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
             this.sreachbox = new System.Windows.Forms.ToolStripTextBox();
@@ -59,15 +57,17 @@
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.ProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
-            this.RefreshButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.Delete_Button = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
+            this.RefreshButton = new System.Windows.Forms.ToolStripButton();
+            this.senderB = new System.Windows.Forms.ToolStripButton();
+            this.Delete_Button = new System.Windows.Forms.ToolStripButton();
+            this.Download_button = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
+            this.Open_Browser = new System.Windows.Forms.ToolStripButton();
+            this.connectbutton = new System.Windows.Forms.ToolStripButton();
             timer = new System.Windows.Forms.Timer(this.components);
             this.MouseRight.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -221,29 +221,6 @@
             this.label_browser.Size = new System.Drawing.Size(86, 24);
             this.label_browser.Text = "toolStripLabel1";
             // 
-            // Open_Browser
-            // 
-            this.Open_Browser.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.Open_Browser.Image = ((System.Drawing.Image)(resources.GetObject("Open_Browser.Image")));
-            this.Open_Browser.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.Open_Browser.Margin = new System.Windows.Forms.Padding(0, 5, 0, 2);
-            this.Open_Browser.Name = "Open_Browser";
-            this.Open_Browser.Size = new System.Drawing.Size(23, 20);
-            this.Open_Browser.Text = "toolStripButton1";
-            this.Open_Browser.Click += new System.EventHandler(this.Open_Browser_Click);
-            // 
-            // connectbutton
-            // 
-            this.connectbutton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.connectbutton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.connectbutton.Image = ((System.Drawing.Image)(resources.GetObject("connectbutton.Image")));
-            this.connectbutton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.connectbutton.Name = "connectbutton";
-            this.connectbutton.Padding = new System.Windows.Forms.Padding(1, 0, 10, 1);
-            this.connectbutton.Size = new System.Drawing.Size(84, 24);
-            this.connectbutton.Text = "Conncetion";
-            this.connectbutton.Click += new System.EventHandler(this.Conn_Click);
-            // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
@@ -272,11 +249,11 @@
             this.toolStripSeparator8,
             this.RefreshButton,
             this.toolStripSeparator9,
-            this.toolStripButton2,
+            this.senderB,
             this.toolStripSeparator5,
             this.Delete_Button,
             this.toolStripSeparator10,
-            this.toolStripButton1,
+            this.Download_button,
             this.toolStripButton4,
             this.toolStripSeparator11});
             this.toolStrip2.Location = new System.Drawing.Point(0, 473);
@@ -309,6 +286,26 @@
             this.toolStripSeparator8.Name = "toolStripSeparator8";
             this.toolStripSeparator8.Size = new System.Drawing.Size(6, 25);
             // 
+            // toolStripSeparator9
+            // 
+            this.toolStripSeparator9.Name = "toolStripSeparator9";
+            this.toolStripSeparator9.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripSeparator10
+            // 
+            this.toolStripSeparator10.Name = "toolStripSeparator10";
+            this.toolStripSeparator10.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripSeparator11
+            // 
+            this.toolStripSeparator11.Name = "toolStripSeparator11";
+            this.toolStripSeparator11.Size = new System.Drawing.Size(6, 25);
+            // 
             // RefreshButton
             // 
             this.RefreshButton.Image = ((System.Drawing.Image)(resources.GetObject("RefreshButton.Image")));
@@ -318,24 +315,14 @@
             this.RefreshButton.Text = "Refresh ";
             this.RefreshButton.Click += new System.EventHandler(this.Refresh_Button);
             // 
-            // toolStripSeparator9
+            // senderB
             // 
-            this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripButton2
-            // 
-            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(79, 22);
-            this.toolStripButton2.Text = "Send Files";
-            this.toolStripButton2.Click += new System.EventHandler(this.Send_Click);
-            // 
-            // toolStripSeparator5
-            // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
+            this.senderB.Image = ((System.Drawing.Image)(resources.GetObject("senderB.Image")));
+            this.senderB.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.senderB.Name = "senderB";
+            this.senderB.Size = new System.Drawing.Size(79, 22);
+            this.senderB.Text = "Send Files";
+            this.senderB.Click += new System.EventHandler(this.Send_Click);
             // 
             // Delete_Button
             // 
@@ -346,33 +333,46 @@
             this.Delete_Button.Text = "Delete All /Select";
             this.Delete_Button.Click += new System.EventHandler(this.Delete_Button_Click);
             // 
-            // toolStripSeparator10
+            // Download_button
             // 
-            this.toolStripSeparator10.Name = "toolStripSeparator10";
-            this.toolStripSeparator10.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripButton1
-            // 
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(100, 22);
-            this.toolStripButton1.Text = "Download/All";
-            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click_1);
+            this.Download_button.Image = ((System.Drawing.Image)(resources.GetObject("Download_button.Image")));
+            this.Download_button.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.Download_button.Name = "Download_button";
+            this.Download_button.Size = new System.Drawing.Size(100, 22);
+            this.Download_button.Text = "Download/All";
+            this.Download_button.Click += new System.EventHandler(this.toolStripButton1_Click_1);
             // 
             // toolStripButton4
             // 
-            this.toolStripButton4.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton4.Image")));
+            this.toolStripButton4.Image = global::severnmt.Properties.Resources.Settings_icon;
             this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton4.Name = "toolStripButton4";
             this.toolStripButton4.Size = new System.Drawing.Size(64, 22);
             this.toolStripButton4.Text = "Setting";
             this.toolStripButton4.Click += new System.EventHandler(this.toolStripButton4_Click);
             // 
-            // toolStripSeparator11
+            // Open_Browser
             // 
-            this.toolStripSeparator11.Name = "toolStripSeparator11";
-            this.toolStripSeparator11.Size = new System.Drawing.Size(6, 25);
+            this.Open_Browser.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.Open_Browser.Image = global::severnmt.Properties.Resources.Folder_icon;
+            this.Open_Browser.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.Open_Browser.Margin = new System.Windows.Forms.Padding(0, 5, 0, 2);
+            this.Open_Browser.Name = "Open_Browser";
+            this.Open_Browser.Size = new System.Drawing.Size(23, 20);
+            this.Open_Browser.Text = "toolStripButton1";
+            this.Open_Browser.Click += new System.EventHandler(this.Open_Browser_Click);
+            // 
+            // connectbutton
+            // 
+            this.connectbutton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.connectbutton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.connectbutton.Image = ((System.Drawing.Image)(resources.GetObject("connectbutton.Image")));
+            this.connectbutton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.connectbutton.Name = "connectbutton";
+            this.connectbutton.Padding = new System.Windows.Forms.Padding(1, 0, 10, 1);
+            this.connectbutton.Size = new System.Drawing.Size(84, 24);
+            this.connectbutton.Text = "Conncetion";
+            this.connectbutton.Click += new System.EventHandler(this.Conn_Click);
             // 
             // Form1
             // 
@@ -420,13 +420,13 @@
         private System.Windows.Forms.ToolStripButton clear_check;
         private System.Windows.Forms.ToolStripProgressBar ProgressBar;
         private System.Windows.Forms.ToolStripButton RefreshButton;
-        private System.Windows.Forms.ToolStripButton toolStripButton2;
+        private System.Windows.Forms.ToolStripButton senderB;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripButton Delete_Button;
         private System.Windows.Forms.ToolStripButton toolStripButton4;
         private System.Windows.Forms.ToolStripLabel toolStripLabel3;
         private System.Windows.Forms.ToolStripTextBox sreachbox;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton Download_button;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
