@@ -35,6 +35,7 @@ namespace severnmt
         List<cilent> cilents = new List<cilent>();
         Tranferclint transferClient;
         bool Refresh;
+        bool beginprogress = false;
         bool ClintConnction = false;
         bool chekconnction = false; // key check if socket  is conncet is no
         bool finsh = false;
@@ -247,7 +248,7 @@ namespace severnmt
                 chekconnction = true;
 
 
-                if (queue.Filename != "list.json") { if (Refresh) { freah = true; } }
+             //   if (queue.Filename != "list.json") { if (Refresh) { freah = true; } }
                 
               
 
@@ -384,7 +385,8 @@ namespace severnmt
         //  private Tranferclint transferClient=new  Tranferclint;
         private void TransferClient_Queued(object sender, queue queue)
         {
-            chekconnction = false;
+            beginprogress = true;//begin progrsses
+               chekconnction = false;
             if (InvokeRequired)
             {
                 Invoke(new TransferEventHandler(TransferClient_Queued), sender, queue);
@@ -561,8 +563,10 @@ namespace severnmt
 
         bool readbool = false;
 
+
         private void progessing(queue queue)
         {
+         
             try
             {
                 //   for (int i = 0; i < queueList.Count; i++)
@@ -601,25 +605,26 @@ namespace severnmt
 
                         listfiles.Items[queue.ID.ToString()].SubItems[2].Text = queue.Progress + "%" + type;
 
-                         
+                      //  uploade = false;
 
                     }
                     catch { }
                 }
 
-                    if (queue.Progress == 100 || !queue.Running)
+                if (queue.Progress == 100 || !queue.Running)
+                {
+                    if (queue.Filename == Path.GetFileName("list.json"))
                     {
-                    if (queue.Filename ==Path.GetFileName( "list.json"))
-                    {
-
+                      //  uploade = true;
                         readbool = true;
-                           
-                        
+
+
                     }
 
 
                     else
                     {
+                      //  uploade = true;
                         if (queue.Filename != "list.json" & queue.Filename != "commad.json")
                         {
 
@@ -628,22 +633,97 @@ namespace severnmt
                             listfiles.Items[queue.ID.ToString()].SubItems[2].ForeColor = System.Drawing.Color.Green;
                             listfiles.Items[queue.ID.ToString()].SubItems[2].Text = " 100% Complete";
                         }
+                        // bool uploade = false;
+
+                      
+
+
                     }
+                   
                     }
 
-                     
+                  
 
 
 
+
+
+
+                    
+
+
+
+
+
+                }
 
 
 
 
                 //}
-            }
+            
             catch { }
         }
 
+        private void finsh_Progress()
+        {
+            bool uploade = false;
+            foreach (ListViewItem item in listfiles.Items) {
+                try
+                {
+                    queue _queue = (queue)item.Tag;
+                        if (_queue != null)
+                    {
+
+
+                        if (_queue.Progress == 100 || !_queue.Running)
+                        {
+
+                            uploade = true;
+
+
+
+
+
+
+
+
+                        }  // if (_queue.Progress == 100 || !_queue.Running)
+
+                        else {
+
+
+                            uploade = false; break;
+
+
+
+                        } //else (_queue.Progress == 100 || !_queue.Running)
+
+
+
+
+
+                    }// if (_queue != null)
+
+                }
+                catch { }
+            
+            
+            
+            
+            
+            }
+            
+            if (uploade)
+            {
+
+                beginprogress = false;
+
+                //begin to Refreah auto
+
+                if (Refresh) { freah = true;     }
+            }
+        }
         private void readjsonFile()
         {
             using (StreamReader read = new StreamReader(outputFolder + "/list.json"))
@@ -744,6 +824,7 @@ namespace severnmt
                 Refreshing();
             
             }
+            if (beginprogress) { finsh_Progress(); }//check prograss is finsh
 
         }
         private void Refreshing()
@@ -831,7 +912,7 @@ namespace severnmt
         private bool draging_file_Extension(string file) {
             bool ret = false;
 
-            switch (Path.GetExtension(file))
+            switch (Path.GetExtension(file).ToLower())
             {
                 case ".jpg": { ret = true;  break; }
 
