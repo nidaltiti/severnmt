@@ -33,6 +33,7 @@ namespace severnmt
             this.Refresh = new System.Windows.Forms.CheckBox();
             this.Tow_Dictionary = new System.Windows.Forms.CheckBox();
             this.g1 = new System.Windows.Forms.GroupBox();
+            this.textFolder = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.porttext = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -41,10 +42,9 @@ namespace severnmt
             this.Save_grallery = new System.Windows.Forms.CheckBox();
             this.Cancel = new System.Windows.Forms.Button();
             this.Save = new System.Windows.Forms.Button();
-            this.paypal = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.paypal_button = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.textFolder = new System.Windows.Forms.TextBox();
             this.g1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -98,6 +98,13 @@ namespace severnmt
             this.g1.TabIndex = 4;
             this.g1.TabStop = false;
             this.g1.Text = "Program";
+            // 
+            // textFolder
+            // 
+            this.textFolder.Location = new System.Drawing.Point(146, 64);
+            this.textFolder.Name = "textFolder";
+            this.textFolder.Size = new System.Drawing.Size(180, 22);
+            this.textFolder.TabIndex = 10;
             // 
             // label4
             // 
@@ -181,16 +188,6 @@ namespace severnmt
             this.Save.UseVisualStyleBackColor = true;
             this.Save.Click += new System.EventHandler(this.Save_Click);
             // 
-            // paypal
-            // 
-            this.paypal.AutoSize = true;
-            this.paypal.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.paypal.Location = new System.Drawing.Point(93, 404);
-            this.paypal.Name = "paypal";
-            this.paypal.Size = new System.Drawing.Size(119, 39);
-            this.paypal.TabIndex = 0;
-            this.paypal.Text = "paypal";
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -200,6 +197,23 @@ namespace severnmt
             this.label1.Size = new System.Drawing.Size(155, 46);
             this.label1.TabIndex = 6;
             this.label1.Text = "Settings";
+            // 
+            // paypal_button
+            // 
+            this.paypal_button.BackColor = System.Drawing.Color.Gold;
+            this.paypal_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.paypal_button.ForeColor = System.Drawing.Color.Maroon;
+            this.paypal_button.Image = global::severnmt.Properties.Resources.donat_paypal_G98_icon;
+            this.paypal_button.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.paypal_button.Location = new System.Drawing.Point(29, 390);
+            this.paypal_button.Margin = new System.Windows.Forms.Padding(78, 40, 89, 30);
+            this.paypal_button.Name = "paypal_button";
+            this.paypal_button.Size = new System.Drawing.Size(297, 62);
+            this.paypal_button.TabIndex = 8;
+            this.paypal_button.Text = "Donate  just 0.25 $";
+            this.paypal_button.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.paypal_button.UseVisualStyleBackColor = false;
+            this.paypal_button.Click += new System.EventHandler(this.paypal_button_click);
             // 
             // pictureBox1
             // 
@@ -212,30 +226,25 @@ namespace severnmt
             this.pictureBox1.TabIndex = 7;
             this.pictureBox1.TabStop = false;
             // 
-            // textFolder
-            // 
-            this.textFolder.Location = new System.Drawing.Point(146, 64);
-            this.textFolder.Name = "textFolder";
-            this.textFolder.Size = new System.Drawing.Size(180, 22);
-            this.textFolder.TabIndex = 10;
-            // 
             // Setting_from
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoSize = true;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(388, 506);
+            this.Controls.Add(this.paypal_button);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.paypal);
             this.Controls.Add(this.Save);
             this.Controls.Add(this.Cancel);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.g1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Setting_from";
             this.ShowIcon = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Setting";
             this.Load += new System.EventHandler(this.Setting_from_Load);
             this.g1.ResumeLayout(false);
@@ -258,12 +267,12 @@ namespace severnmt
         private System.Windows.Forms.CheckBox Save_grallery;
         private System.Windows.Forms.Button Save;
         private System.Windows.Forms.Button Cancel;
-        private System.Windows.Forms.Label paypal;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.TextBox porttext;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox textFolder;
+        private System.Windows.Forms.Button paypal_button;
     }
 }

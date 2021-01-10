@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,10 +34,16 @@ namespace severnmt
 
         private void Setting_from_Load(object sender, EventArgs e)
         {
+
+
+            GraphicsPath p = new GraphicsPath();
+            p.AddEllipse(4,4 , paypal_button.Width-8 , paypal_button.Height-8 );
+
+            paypal_button.Region= new Region(p);
             porttext.Text = Properties.Settings.Default.Port.ToString();
             textFolder.Text = Properties.Settings.Default.FolderName;
 
-            Tow_Dictionary.Checked= Tow_dictionary = Properties.Settings.Default.Tow_dictionary;
+            Tow_Dictionary.Checked= Tow_dictionary = Properties.Settings.Default.TowDirectory;
 
             Refresh.Checked= refresh = Properties.Settings.Default.AutoRefreach;
             Save_grallery.Checked= saveGallery = Properties.Settings.Default.SaveGarllery;
@@ -79,9 +87,15 @@ namespace severnmt
             saveGallery = Save_grallery.Checked;
         }
 
+        private void paypal_button_click(object sender, EventArgs e)
+        {
+            Process.Start("https://www.paypal.com/donate?hosted_button_id=9LJP5PTR5TXKW");
+
+        }
+
         private void Save_Click(object sender, EventArgs e)
         {
-            Save_paramter  Save = new Save_paramter() {  namefollder=textFolder.Text, port=Convert.ToInt32( porttext.Text) , Tow_Dictionary= this.Tow_dictionary, Refresh=refresh,GallryAtudo= saveGallery };
+            Save_paramter  Save = new Save_paramter() {  namefollder=textFolder.Text, port=Convert.ToInt32( porttext.Text) , Tow_Directory = this.Tow_dictionary, Refresh=refresh,GallryAtudo= saveGallery };
          //   d.namefollder = "hi nidal";
             if (infomation != null) { infomation(Save); }
             this.Close();

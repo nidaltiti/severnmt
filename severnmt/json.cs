@@ -30,7 +30,7 @@ namespace severnmt
     
     public int port { get; set; }
 
-        public bool  Tow_Dictionary { get; set; }
+        public bool Tow_Directory { get; set; }
         public bool Refresh { get; set; }
         public bool GallryAtudo { get; set; }
     }

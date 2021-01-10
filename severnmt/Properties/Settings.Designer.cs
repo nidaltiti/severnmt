@@ -50,12 +50,12 @@ namespace severnmt.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool Tow_dictionary {
+        public bool TowDirectory {
             get {
-                return ((bool)(this["Tow_dictionary"]));
+                return ((bool)(this["TowDirectory"]));
             }
             set {
-                this["Tow_dictionary"] = value;
+                this["TowDirectory"] = value;
             }
         }
         

@@ -8,7 +8,7 @@
     <Setting Name="Port" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">9</Value>
     </Setting>
-    <Setting Name="Tow_dictionary" Type="System.Boolean" Scope="User">
+    <Setting Name="TowDirectory" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="AutoRefreach" Type="System.Boolean" Scope="User">

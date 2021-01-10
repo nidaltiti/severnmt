@@ -35,6 +35,7 @@ namespace severnmt
         List<cilent> cilents = new List<cilent>();
         Tranferclint transferClient;
         bool Refresh;
+        bool TowDirectory = false;
         bool beginprogress = false;
         bool ClintConnction = false;
         bool chekconnction = false; // key check if socket  is conncet is no
@@ -119,9 +120,9 @@ namespace severnmt
                          tranlistening.Start(tranport);
                          tranlistening.Accepted += tranlistening_Accepted;
                          connectbutton.Text = "Diconncetion";
-                        
-                    //  ClintConnction = true;
-                    openconntion = true;
+                         connectbutton.Image = Properties.Resources.disconncet;
+                     //  ClintConnction = true;
+                     openconntion = true;
                      }
                      else {
 
@@ -145,6 +146,7 @@ namespace severnmt
                         // listfiles.ContextMenuStrip = null;
                         openconntion = false;
                          chekconnction = false;
+                         connectbutton.Image = Properties.Resources.connect_icon;
                      }
 
                  });
@@ -225,8 +227,7 @@ namespace severnmt
 
 
             }
-            bool uploadin = false;
-
+          
            
 
            
@@ -237,8 +238,9 @@ namespace severnmt
                 queueList.Clear();
                 if (queue.Filename != "list.json")
                 {
-                   //
+                    if (TowDirectory) { creat_to_Directory(); }
                     Process.Start(outputFolder);
+
                 }
                
 
@@ -264,7 +266,121 @@ namespace severnmt
 
         }
 
+        private void creat_to_Directory()
+        { string imgdir = outputFolder + "\\" + "Picture";
+            string viddir = outputFolder + "\\" + "Video";
 
+            if (!(Directory.Exists(imgdir)))
+            {
+                Directory.CreateDirectory(imgdir);
+
+            }
+
+            if (!(Directory.Exists(viddir)))
+            {
+                Directory.CreateDirectory(viddir);
+
+            }
+            foreach(string fileName in Directory.GetFiles(outputFolder)) {
+                string file = Path.GetFileName(fileName);
+                if (check_file_picture(file)) {
+                    try
+                    {    if (!File.Exists(imgdir + "//" + file))
+                        {
+                            File.Move(fileName, imgdir + "//" + file);
+                        }//(!File.Exists(imgdir + "//" + file))
+
+                        else {
+                           
+                            File.Delete( imgdir + "//" + file);
+
+                            File.Move(fileName, imgdir + "//" + file);
+
+
+                        }// else (!File.Exists(imgdir + "//" + file))
+
+
+                    }
+                    catch { }
+
+
+
+                }//  if (check_file_picture(file))  check video
+                else {
+
+                    if (check_file_video(file))
+                    {
+
+                        try { 
+                            if(!File.Exists(viddir + "//" + file)) {
+                            
+                                File.Move(fileName, viddir + "//" + file);
+                            }//if(!File.Exists(viddir + "//" + file))
+
+                            else {
+
+                                File.Delete(viddir + "//" + file);
+                                File.Move(fileName, viddir + "//" + file);
+
+
+
+                            }//else if(!File.Exists(viddir + "//" + file))
+                        }
+                        catch { }
+
+                    }// if (check_file_video(file)) check video
+
+
+                }//else   if (check_file_picture(file))
+
+
+                }
+
+        }
+        private bool check_file_picture(string file) {
+
+            bool is_image = false;
+
+
+            switch (Path.GetExtension(file).ToLower())
+            {
+                case ".jpg": { is_image = true; break; }
+
+
+                case ".png": { is_image = true; break; }
+
+                case ".jpeg": { is_image = true; break; }
+
+            }
+                    return is_image;
+
+
+
+
+        }
+
+        private bool check_file_video(string file)
+        {
+
+            bool is_video = false;
+
+
+            switch (Path.GetExtension(file).ToLower())
+            {
+                case ".mp4": { is_video = true; break; }
+
+
+                case ".avi": { is_video = true; break; }
+
+                case ".mov": { is_video = true; break; }
+
+            }
+            return is_video;
+
+
+
+
+        }
 
 
         bool freah = false;
@@ -1221,10 +1337,10 @@ namespace severnmt
         private void toolStripButton4_Click(object sender, EventArgs e)
         {
             Setting_from setting = new Setting_from();
-          
+           
 
             setting.infomation += Setting_infomation;
-
+            setting.Location = this.Location;
             setting.ShowDialog();
         }
 
@@ -1246,7 +1362,7 @@ namespace severnmt
 
             Properties.Settings.Default.Port = S.port;
             Properties.Settings.Default.AutoRefreach = S.Refresh;
-            Properties.Settings.Default.Tow_dictionary = S.Tow_Dictionary;
+            Properties.Settings.Default.TowDirectory = S.Tow_Directory;
             Properties.Settings.Default.SaveGarllery = S.GallryAtudo;
             Properties.Settings.Default.Save();
             tansfer_form_properties();
@@ -1259,7 +1375,7 @@ namespace severnmt
             outputFolder = Properties.Settings.Default.FolderName;
             label_browser.Text = Path.GetFileNameWithoutExtension(outputFolder);
             Refresh = Properties.Settings.Default.AutoRefreach;
-
+            TowDirectory = Properties.Settings.Default.TowDirectory;
         }
 
 
@@ -1275,6 +1391,23 @@ namespace severnmt
             else { checkbox_files(3); }
             anycheckbox_ischecked = false;
 
+        }
+
+        private void paypal_button_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://www.paypal.com/donate?hosted_button_id=9LJP5PTR5TXKW");
+
+        }
+
+        private void AddrissBox_Click(object sender, EventArgs e)
+        {
+            IPForm Ipbox = new IPForm(AddrissBox.Text, PortBox.Text);
+
+            Ipbox.Location = this.Location;
+
+
+
+            Ipbox.ShowDialog();
         }
 
         private void toolStripLabel3_MouseMove(object sender, MouseEventArgs e)

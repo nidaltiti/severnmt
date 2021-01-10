@@ -30,15 +30,11 @@
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.Timer timer;
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.listfiles = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.MouseRight = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.downloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.clearCheckboxsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.Addriss = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -53,7 +49,6 @@
             this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
             this.sreachbox = new System.Windows.Forms.ToolStripTextBox();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
-            this.clear_check = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.ProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
@@ -61,13 +56,18 @@
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
+            this.clear_check = new System.Windows.Forms.ToolStripButton();
             this.RefreshButton = new System.Windows.Forms.ToolStripButton();
             this.senderB = new System.Windows.Forms.ToolStripButton();
             this.Delete_Button = new System.Windows.Forms.ToolStripButton();
             this.Download_button = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
+            this.paypal_button = new System.Windows.Forms.ToolStripButton();
             this.Open_Browser = new System.Windows.Forms.ToolStripButton();
             this.connectbutton = new System.Windows.Forms.ToolStripButton();
+            this.downloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clearCheckboxsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             timer = new System.Windows.Forms.Timer(this.components);
             this.MouseRight.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -126,27 +126,6 @@
             this.MouseRight.Size = new System.Drawing.Size(163, 70);
             this.MouseRight.Opening += new System.ComponentModel.CancelEventHandler(this.MouseRight_Opening);
             // 
-            // downloadToolStripMenuItem
-            // 
-            this.downloadToolStripMenuItem.Name = "downloadToolStripMenuItem";
-            this.downloadToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
-            this.downloadToolStripMenuItem.Text = "Download";
-            this.downloadToolStripMenuItem.Click += new System.EventHandler(this.downloadToolStripMenuItem_Click);
-            // 
-            // deleteToolStripMenuItem
-            // 
-            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
-            this.deleteToolStripMenuItem.Text = "Delete";
-            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
-            // 
-            // clearCheckboxsToolStripMenuItem
-            // 
-            this.clearCheckboxsToolStripMenuItem.Name = "clearCheckboxsToolStripMenuItem";
-            this.clearCheckboxsToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
-            this.clearCheckboxsToolStripMenuItem.Text = "Clear Checkboxs";
-            this.clearCheckboxsToolStripMenuItem.Click += new System.EventHandler(this.clear_check_Click);
-            // 
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -187,6 +166,7 @@
             this.AddrissBox.Name = "AddrissBox";
             this.AddrissBox.ReadOnly = true;
             this.AddrissBox.Size = new System.Drawing.Size(100, 27);
+            this.AddrissBox.Click += new System.EventHandler(this.AddrissBox_Click);
             // 
             // toolStripSeparator2
             // 
@@ -255,21 +235,13 @@
             this.toolStripSeparator10,
             this.Download_button,
             this.toolStripButton4,
-            this.toolStripSeparator11});
+            this.toolStripSeparator11,
+            this.paypal_button});
             this.toolStrip2.Location = new System.Drawing.Point(0, 473);
             this.toolStrip2.Name = "toolStrip2";
             this.toolStrip2.Size = new System.Drawing.Size(790, 25);
             this.toolStrip2.TabIndex = 7;
             this.toolStrip2.Text = "toolStrip2";
-            // 
-            // clear_check
-            // 
-            this.clear_check.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.clear_check.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.clear_check.Name = "clear_check";
-            this.clear_check.Size = new System.Drawing.Size(99, 22);
-            this.clear_check.Text = "Clear Checkboxs";
-            this.clear_check.Click += new System.EventHandler(this.clear_check_Click);
             // 
             // toolStripSeparator7
             // 
@@ -306,9 +278,18 @@
             this.toolStripSeparator11.Name = "toolStripSeparator11";
             this.toolStripSeparator11.Size = new System.Drawing.Size(6, 25);
             // 
+            // clear_check
+            // 
+            this.clear_check.Image = global::severnmt.Properties.Resources.unchek_png;
+            this.clear_check.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.clear_check.Name = "clear_check";
+            this.clear_check.Size = new System.Drawing.Size(115, 22);
+            this.clear_check.Text = "Clear Checkboxs";
+            this.clear_check.Click += new System.EventHandler(this.clear_check_Click);
+            // 
             // RefreshButton
             // 
-            this.RefreshButton.Image = ((System.Drawing.Image)(resources.GetObject("RefreshButton.Image")));
+            this.RefreshButton.Image = global::severnmt.Properties.Resources.refreach;
             this.RefreshButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.RefreshButton.Name = "RefreshButton";
             this.RefreshButton.Size = new System.Drawing.Size(69, 22);
@@ -317,7 +298,7 @@
             // 
             // senderB
             // 
-            this.senderB.Image = ((System.Drawing.Image)(resources.GetObject("senderB.Image")));
+            this.senderB.Image = global::severnmt.Properties.Resources.send;
             this.senderB.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.senderB.Name = "senderB";
             this.senderB.Size = new System.Drawing.Size(79, 22);
@@ -326,7 +307,7 @@
             // 
             // Delete_Button
             // 
-            this.Delete_Button.Image = ((System.Drawing.Image)(resources.GetObject("Delete_Button.Image")));
+            this.Delete_Button.Image = global::severnmt.Properties.Resources.delet;
             this.Delete_Button.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.Delete_Button.Name = "Delete_Button";
             this.Delete_Button.Size = new System.Drawing.Size(116, 22);
@@ -335,7 +316,7 @@
             // 
             // Download_button
             // 
-            this.Download_button.Image = ((System.Drawing.Image)(resources.GetObject("Download_button.Image")));
+            this.Download_button.Image = global::severnmt.Properties.Resources.download;
             this.Download_button.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.Download_button.Name = "Download_button";
             this.Download_button.Size = new System.Drawing.Size(100, 22);
@@ -351,6 +332,15 @@
             this.toolStripButton4.Text = "Setting";
             this.toolStripButton4.Click += new System.EventHandler(this.toolStripButton4_Click);
             // 
+            // paypal_button
+            // 
+            this.paypal_button.Image = global::severnmt.Properties.Resources.donat_paypal_G98_icon;
+            this.paypal_button.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.paypal_button.Name = "paypal_button";
+            this.paypal_button.Size = new System.Drawing.Size(94, 22);
+            this.paypal_button.Text = "donate 0.25$";
+            this.paypal_button.Click += new System.EventHandler(this.paypal_button_Click);
+            // 
             // Open_Browser
             // 
             this.Open_Browser.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -365,14 +355,37 @@
             // connectbutton
             // 
             this.connectbutton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.connectbutton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.connectbutton.Image = ((System.Drawing.Image)(resources.GetObject("connectbutton.Image")));
+            this.connectbutton.Image = global::severnmt.Properties.Resources.connect_icon;
             this.connectbutton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.connectbutton.Name = "connectbutton";
             this.connectbutton.Padding = new System.Windows.Forms.Padding(1, 0, 10, 1);
-            this.connectbutton.Size = new System.Drawing.Size(84, 24);
+            this.connectbutton.Size = new System.Drawing.Size(100, 24);
             this.connectbutton.Text = "Conncetion";
             this.connectbutton.Click += new System.EventHandler(this.Conn_Click);
+            // 
+            // downloadToolStripMenuItem
+            // 
+            this.downloadToolStripMenuItem.Image = global::severnmt.Properties.Resources.download;
+            this.downloadToolStripMenuItem.Name = "downloadToolStripMenuItem";
+            this.downloadToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.downloadToolStripMenuItem.Text = "Download";
+            this.downloadToolStripMenuItem.Click += new System.EventHandler(this.downloadToolStripMenuItem_Click);
+            // 
+            // deleteToolStripMenuItem
+            // 
+            this.deleteToolStripMenuItem.Image = global::severnmt.Properties.Resources.delet;
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.deleteToolStripMenuItem.Text = "Delete";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
+            // 
+            // clearCheckboxsToolStripMenuItem
+            // 
+            this.clearCheckboxsToolStripMenuItem.Image = global::severnmt.Properties.Resources.unchek_png;
+            this.clearCheckboxsToolStripMenuItem.Name = "clearCheckboxsToolStripMenuItem";
+            this.clearCheckboxsToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.clearCheckboxsToolStripMenuItem.Text = "Clear Checkboxs";
+            this.clearCheckboxsToolStripMenuItem.Click += new System.EventHandler(this.clear_check_Click);
             // 
             // Form1
             // 
@@ -434,6 +447,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
         private System.Windows.Forms.ToolStripMenuItem clearCheckboxsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton paypal_button;
     }
 }
 
