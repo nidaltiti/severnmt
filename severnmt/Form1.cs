@@ -874,6 +874,7 @@ namespace severnmt
                     catch { break; }
                   
                 }
+                Properties.Settings.Default.SaveGarllery = formatted[0]["Auto"].Value<bool>();
                 read.Close();
                 File.Delete(outputFolder + "/list.json");
             }
@@ -945,7 +946,7 @@ namespace severnmt
         }
         private void Refreshing()
         {
-            commandjson _commandjson = new commandjson { numbcommdan = 100 };
+            commandjson _commandjson = new commandjson { numbcommdan = 100,Auto=Properties.Settings.Default.SaveGarllery };
 
 
             //   JsonConvert.SerializeObject(json_list)
@@ -1153,7 +1154,7 @@ namespace severnmt
                 }
             }
             else { st.Add(string.Empty); Checked = false; }
-            commandjson _commandjson = new commandjson { numbcommdan = num, array = st };
+            commandjson _commandjson = new commandjson { numbcommdan = num, array = st ,Auto=Properties.Settings.Default.SaveGarllery};
 
 
          //   JsonConvert.SerializeObject(json_list)
@@ -1350,8 +1351,8 @@ namespace severnmt
 
             //   MessageBox.Show(Save_Setting.namefollder+ Save_Setting.port+ Save_Setting.Refresh+ Save_Setting.GallryAtudo+ Save_Setting.Tow_Dictionary);
             save_To_properties(Save_Setting);
-            connction();
-            connction();
+          //  connction();
+           // connction();
         }
    private void save_To_properties(Save_paramter S)
         {

@@ -20,7 +20,7 @@ namespace severnmt
 
         public int numbcommdan { get; set; }
         public List<string> array { get; set; }
-
+        public  bool Auto { get; set; }
     }
     partial class Save_paramter {
 
