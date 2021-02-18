@@ -874,7 +874,11 @@ namespace severnmt
                     catch { break; }
                   
                 }
-                Properties.Settings.Default.SaveGarllery = formatted[0]["Auto"].Value<bool>();
+                try
+                {
+                    Properties.Settings.Default.SaveGarllery = formatted[0]["Auto"].Value<bool>();
+                }
+                catch { }
                 read.Close();
                 File.Delete(outputFolder + "/list.json");
             }
@@ -1087,7 +1091,14 @@ namespace severnmt
 
                 label_browser.Text = Path.GetFileName(folder.SelectedPath);
                 outputFolder = folder.SelectedPath;
-                transferClient.OutputFolder = outputFolder;
+
+                try
+                {
+                    //if(transferClient!=null)
+                    //transferClient.OutputFolder = outputFolder;
+                }
+                catch { }
+                Properties.Settings.Default.FolderName = outputFolder;
 
             }
 
@@ -1274,13 +1285,14 @@ namespace severnmt
 
                 DialogResult _DialogResult = MessageBox.Show(" you Sure Delete all files", "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
                
-                if (_DialogResult == DialogResult.OK) { checkbox_files(2); }
+                if (_DialogResult == DialogResult.OK) { checkbox_files(2); Refresh(); }
 
 
 
                     ; 
             }
             anycheckbox_ischecked = false;
+           
         }
 
         private void clear_check_Click(object sender, EventArgs e)
@@ -1410,6 +1422,17 @@ namespace severnmt
 
             Ipbox.ShowDialog();
         }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            try
+            {
+                File.Delete(Properties.Settings.Default.FolderName + "/commad.json");
+                File.Delete(Properties.Settings.Default.FolderName + "/list.json");
+            }
+            catch { }
+            
+            }
 
         private void toolStripLabel3_MouseMove(object sender, MouseEventArgs e)
         {

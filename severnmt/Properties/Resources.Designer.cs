@@ -183,6 +183,16 @@ namespace severnmt.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap sreach {
+            get {
+                object obj = ResourceManager.GetObject("sreach", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap unchek_png {
             get {
                 object obj = ResourceManager.GetObject("unchek png", resourceCulture);

@@ -30,11 +30,15 @@
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.Timer timer;
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.listfiles = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.MouseRight = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.downloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clearCheckboxsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.Addriss = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -45,29 +49,26 @@
             this.PortBox = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.label_browser = new System.Windows.Forms.ToolStripLabel();
+            this.Open_Browser = new System.Windows.Forms.ToolStripButton();
+            this.connectbutton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
             this.sreachbox = new System.Windows.Forms.ToolStripTextBox();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
+            this.clear_check = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.ProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
-            this.clear_check = new System.Windows.Forms.ToolStripButton();
             this.RefreshButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.senderB = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.Delete_Button = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
             this.Download_button = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
             this.paypal_button = new System.Windows.Forms.ToolStripButton();
-            this.Open_Browser = new System.Windows.Forms.ToolStripButton();
-            this.connectbutton = new System.Windows.Forms.ToolStripButton();
-            this.downloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.clearCheckboxsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             timer = new System.Windows.Forms.Timer(this.components);
             this.MouseRight.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -125,6 +126,30 @@
             this.MouseRight.Name = "MouseRight";
             this.MouseRight.Size = new System.Drawing.Size(163, 70);
             this.MouseRight.Opening += new System.ComponentModel.CancelEventHandler(this.MouseRight_Opening);
+            // 
+            // downloadToolStripMenuItem
+            // 
+            this.downloadToolStripMenuItem.Image = global::severnmt.Properties.Resources.download;
+            this.downloadToolStripMenuItem.Name = "downloadToolStripMenuItem";
+            this.downloadToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.downloadToolStripMenuItem.Text = "Download";
+            this.downloadToolStripMenuItem.Click += new System.EventHandler(this.downloadToolStripMenuItem_Click);
+            // 
+            // deleteToolStripMenuItem
+            // 
+            this.deleteToolStripMenuItem.Image = global::severnmt.Properties.Resources.delet;
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.deleteToolStripMenuItem.Text = "Delete";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
+            // 
+            // clearCheckboxsToolStripMenuItem
+            // 
+            this.clearCheckboxsToolStripMenuItem.Image = global::severnmt.Properties.Resources.unchek_png;
+            this.clearCheckboxsToolStripMenuItem.Name = "clearCheckboxsToolStripMenuItem";
+            this.clearCheckboxsToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.clearCheckboxsToolStripMenuItem.Text = "Clear Checkboxs";
+            this.clearCheckboxsToolStripMenuItem.Click += new System.EventHandler(this.clear_check_Click);
             // 
             // toolStrip1
             // 
@@ -186,8 +211,11 @@
             // 
             // PortBox
             // 
+            this.PortBox.BackColor = System.Drawing.Color.LightYellow;
             this.PortBox.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.PortBox.ForeColor = System.Drawing.SystemColors.MenuText;
             this.PortBox.Name = "PortBox";
+            this.PortBox.ReadOnly = true;
             this.PortBox.Size = new System.Drawing.Size(40, 27);
             // 
             // toolStripSeparator4
@@ -201,6 +229,28 @@
             this.label_browser.Size = new System.Drawing.Size(86, 24);
             this.label_browser.Text = "toolStripLabel1";
             // 
+            // Open_Browser
+            // 
+            this.Open_Browser.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.Open_Browser.Image = global::severnmt.Properties.Resources.Folder_icon;
+            this.Open_Browser.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.Open_Browser.Margin = new System.Windows.Forms.Padding(0, 5, 0, 2);
+            this.Open_Browser.Name = "Open_Browser";
+            this.Open_Browser.Size = new System.Drawing.Size(23, 20);
+            this.Open_Browser.Text = "toolStripButton1";
+            this.Open_Browser.Click += new System.EventHandler(this.Open_Browser_Click);
+            // 
+            // connectbutton
+            // 
+            this.connectbutton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.connectbutton.Image = global::severnmt.Properties.Resources.connect_icon;
+            this.connectbutton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.connectbutton.Name = "connectbutton";
+            this.connectbutton.Padding = new System.Windows.Forms.Padding(1, 0, 10, 1);
+            this.connectbutton.Size = new System.Drawing.Size(100, 24);
+            this.connectbutton.Text = "Conncetion";
+            this.connectbutton.Click += new System.EventHandler(this.Conn_Click);
+            // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
@@ -208,13 +258,16 @@
             // 
             // toolStripLabel3
             // 
+            this.toolStripLabel3.Image = global::severnmt.Properties.Resources.sreach;
             this.toolStripLabel3.Name = "toolStripLabel3";
-            this.toolStripLabel3.Size = new System.Drawing.Size(42, 24);
+            this.toolStripLabel3.Size = new System.Drawing.Size(58, 24);
             this.toolStripLabel3.Text = "Search";
             // 
             // sreachbox
             // 
+            this.sreachbox.BackColor = System.Drawing.SystemColors.Info;
             this.sreachbox.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.sreachbox.ForeColor = System.Drawing.SystemColors.MenuText;
             this.sreachbox.Name = "sreachbox";
             this.sreachbox.Size = new System.Drawing.Size(130, 27);
             this.sreachbox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.sreachbox_Enter);
@@ -243,6 +296,15 @@
             this.toolStrip2.TabIndex = 7;
             this.toolStrip2.Text = "toolStrip2";
             // 
+            // clear_check
+            // 
+            this.clear_check.Image = global::severnmt.Properties.Resources.unchek_png;
+            this.clear_check.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.clear_check.Name = "clear_check";
+            this.clear_check.Size = new System.Drawing.Size(115, 22);
+            this.clear_check.Text = "Clear Checkboxs";
+            this.clear_check.Click += new System.EventHandler(this.clear_check_Click);
+            // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
@@ -258,35 +320,6 @@
             this.toolStripSeparator8.Name = "toolStripSeparator8";
             this.toolStripSeparator8.Size = new System.Drawing.Size(6, 25);
             // 
-            // toolStripSeparator9
-            // 
-            this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripSeparator5
-            // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripSeparator10
-            // 
-            this.toolStripSeparator10.Name = "toolStripSeparator10";
-            this.toolStripSeparator10.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripSeparator11
-            // 
-            this.toolStripSeparator11.Name = "toolStripSeparator11";
-            this.toolStripSeparator11.Size = new System.Drawing.Size(6, 25);
-            // 
-            // clear_check
-            // 
-            this.clear_check.Image = global::severnmt.Properties.Resources.unchek_png;
-            this.clear_check.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.clear_check.Name = "clear_check";
-            this.clear_check.Size = new System.Drawing.Size(115, 22);
-            this.clear_check.Text = "Clear Checkboxs";
-            this.clear_check.Click += new System.EventHandler(this.clear_check_Click);
-            // 
             // RefreshButton
             // 
             this.RefreshButton.Image = global::severnmt.Properties.Resources.refreach;
@@ -295,6 +328,11 @@
             this.RefreshButton.Size = new System.Drawing.Size(69, 22);
             this.RefreshButton.Text = "Refresh ";
             this.RefreshButton.Click += new System.EventHandler(this.Refresh_Button);
+            // 
+            // toolStripSeparator9
+            // 
+            this.toolStripSeparator9.Name = "toolStripSeparator9";
+            this.toolStripSeparator9.Size = new System.Drawing.Size(6, 25);
             // 
             // senderB
             // 
@@ -305,6 +343,11 @@
             this.senderB.Text = "Send Files";
             this.senderB.Click += new System.EventHandler(this.Send_Click);
             // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
+            // 
             // Delete_Button
             // 
             this.Delete_Button.Image = global::severnmt.Properties.Resources.delet;
@@ -313,6 +356,11 @@
             this.Delete_Button.Size = new System.Drawing.Size(116, 22);
             this.Delete_Button.Text = "Delete All /Select";
             this.Delete_Button.Click += new System.EventHandler(this.Delete_Button_Click);
+            // 
+            // toolStripSeparator10
+            // 
+            this.toolStripSeparator10.Name = "toolStripSeparator10";
+            this.toolStripSeparator10.Size = new System.Drawing.Size(6, 25);
             // 
             // Download_button
             // 
@@ -332,6 +380,11 @@
             this.toolStripButton4.Text = "Setting";
             this.toolStripButton4.Click += new System.EventHandler(this.toolStripButton4_Click);
             // 
+            // toolStripSeparator11
+            // 
+            this.toolStripSeparator11.Name = "toolStripSeparator11";
+            this.toolStripSeparator11.Size = new System.Drawing.Size(6, 25);
+            // 
             // paypal_button
             // 
             this.paypal_button.Image = global::severnmt.Properties.Resources.donat_paypal_G98_icon;
@@ -340,52 +393,6 @@
             this.paypal_button.Size = new System.Drawing.Size(94, 22);
             this.paypal_button.Text = "donate 0.25$";
             this.paypal_button.Click += new System.EventHandler(this.paypal_button_Click);
-            // 
-            // Open_Browser
-            // 
-            this.Open_Browser.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.Open_Browser.Image = global::severnmt.Properties.Resources.Folder_icon;
-            this.Open_Browser.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.Open_Browser.Margin = new System.Windows.Forms.Padding(0, 5, 0, 2);
-            this.Open_Browser.Name = "Open_Browser";
-            this.Open_Browser.Size = new System.Drawing.Size(23, 20);
-            this.Open_Browser.Text = "toolStripButton1";
-            this.Open_Browser.Click += new System.EventHandler(this.Open_Browser_Click);
-            // 
-            // connectbutton
-            // 
-            this.connectbutton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.connectbutton.Image = global::severnmt.Properties.Resources.connect_icon;
-            this.connectbutton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.connectbutton.Name = "connectbutton";
-            this.connectbutton.Padding = new System.Windows.Forms.Padding(1, 0, 10, 1);
-            this.connectbutton.Size = new System.Drawing.Size(100, 24);
-            this.connectbutton.Text = "Conncetion";
-            this.connectbutton.Click += new System.EventHandler(this.Conn_Click);
-            // 
-            // downloadToolStripMenuItem
-            // 
-            this.downloadToolStripMenuItem.Image = global::severnmt.Properties.Resources.download;
-            this.downloadToolStripMenuItem.Name = "downloadToolStripMenuItem";
-            this.downloadToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
-            this.downloadToolStripMenuItem.Text = "Download";
-            this.downloadToolStripMenuItem.Click += new System.EventHandler(this.downloadToolStripMenuItem_Click);
-            // 
-            // deleteToolStripMenuItem
-            // 
-            this.deleteToolStripMenuItem.Image = global::severnmt.Properties.Resources.delet;
-            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
-            this.deleteToolStripMenuItem.Text = "Delete";
-            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
-            // 
-            // clearCheckboxsToolStripMenuItem
-            // 
-            this.clearCheckboxsToolStripMenuItem.Image = global::severnmt.Properties.Resources.unchek_png;
-            this.clearCheckboxsToolStripMenuItem.Name = "clearCheckboxsToolStripMenuItem";
-            this.clearCheckboxsToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
-            this.clearCheckboxsToolStripMenuItem.Text = "Clear Checkboxs";
-            this.clearCheckboxsToolStripMenuItem.Click += new System.EventHandler(this.clear_check_Click);
             // 
             // Form1
             // 
@@ -396,8 +403,10 @@
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.listfiles);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Galleryfly-Win";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.MouseRight.ResumeLayout(false);
             this.toolStrip1.ResumeLayout(false);
